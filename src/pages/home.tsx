@@ -159,7 +159,7 @@ export default function Home() {
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <span
-  className="font-serif text-4xl font-bold text-[#9b7ac7]"
+  className="font-serif text-4xl font-bold text-[#a17a7e]"
   style={{ fontFamily: "Great Vibes" }}
 >
   Pasteleria
@@ -176,8 +176,8 @@ export default function Home() {
   className={cn(
     "w-4 h-4 transition-colors duration-300",
     heartBeat > 0
-      ? "fill-[#9b7ac7] text-[#9b7ac7]"
-      : "text-[#9b7ac7]/50"
+      ? "fill-[#a17a7e] text-[#a17a7e]"
+      : "text-[#a17a7e]/50"
   )}
 />
             </motion.button>
@@ -189,10 +189,10 @@ export default function Home() {
                 key={link.href}
                 href={link.href}
                 className={cn(
-  "text-lg font-medium transition-colors duration-300 hover:text-[#cbafec]",
+  "text-lg font-medium transition-colors duration-300 hover:text-[#c2a1a3]",
   activeSection === link.href.substring(1)
-    ? "text-[#7f5fb1] font-semibold"
-    : "text-[#8f6fc0]"
+    ? "text-[#a17a7e] font-semibold"
+    : "text-[#8d676b]"
 )}
               >
                 {link.label}
@@ -216,7 +216,7 @@ export default function Home() {
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span className="hidden sm:inline">Pedido</span>
-                    <span className="absolute -top-1.5 -right-1.5 bg-primary text-primary-foreground text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                    <span className="absolute -top-1.5 -right-1.5 bg-[#a17a7e] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                       {cartCount}
                     </span>
                   </Button>
@@ -251,7 +251,7 @@ export default function Home() {
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8, delay: 0.4 }}
-  className="text-lg md:text-3xl text-[#8f6fc0] mb-10 max-w-2xl font-light -mt-4"
+  className="text-3xl md:text-5xl text-[#a17a7e] mb-10 max-w-2xl font-light -mt-4"
   style={{ fontFamily: "Great Vibes" }}
 >
   Cada bocado, una obra de arte.
@@ -265,19 +265,30 @@ export default function Home() {
           >
             <Button
   size="icon"
-  className="w-14 h-14 rounded-full bg-[#cbafec] text-white shadow-[0_8px_25px_rgba(203,175,236,0.35)] hover:bg-[#b999e4] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
-              onClick={() => openWhatsApp("Hola! Me gustaría hacer un pedido.")}
-              title="Pedir por WhatsApp"
-            >
+  className="w-14 h-14 rounded-full bg-[#a17a7e] text-white shadow-[0_8px_25px_rgba(161,122,126,0.35)] hover:bg-[#8c686c] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+  onClick={() => openWhatsApp("Hola! Me gustaría hacer un pedido.")}
+  title="Pedir por WhatsApp"
+>
               <SiWhatsapp className="w-6 h-6" />
             </Button>
             <Button
   size="icon"
   variant="outline"
-  className="w-14 h-14 rounded-full bg-[#faf7ff] border-[#e5d8f7] text-[#8f6fc0] shadow-[0_8px_25px_rgba(203,175,236,0.20)] hover:bg-[#f4ecff] hover:shadow-2xl transition-all duration-300 hover:-translate-y-1 backdrop-blur-sm"
-              onClick={makeCall}
-              title="Llamar"
-            >
+  className="
+    w-14 h-14 rounded-full
+    bg-[#fdf6f6]
+    border-[#ddbabc]
+    text-[#a17a7e]
+    shadow-[0_8px_25px_rgba(161,122,126,0.15)]
+    hover:bg-[#f6ebeb]
+    hover:shadow-2xl
+    transition-all duration-300
+    hover:-translate-y-1
+    backdrop-blur-sm
+  "
+  onClick={makeCall}
+  title="Llamar"
+>
               <Phone className="w-6 h-6" />
             </Button>
           </motion.div>
@@ -309,7 +320,7 @@ export default function Home() {
       }, 350);
     }
   }}
-  className="text-3xl text-[#9b7ac7] hover:text-[#7f5fb1] transition-all duration-300 hover:scale-105"
+  className="text-3xl text-[#a17a7e] hover:text-[#a17a7e] transition-all duration-300 hover:scale-105"
 >
   Sobre mí..
 </button>
@@ -357,7 +368,7 @@ export default function Home() {
   <button
   style={{ fontFamily: "Great Vibes" }}
     onClick={() => setShowAbout(false)}
-  className="px-6 py-2 rounded-full bg-[#cbafec] text-2xl text-white hover:bg-[#b999e4] transition-all duration-300 shadow-md">
+  className="px-6 py-2 rounded-full bg-[#a17a7e] text-2xl text-white hover:bg-[#a17a7e] transition-all duration-300 shadow-md">
     Cerrar
   </button>
 </div>
@@ -385,7 +396,7 @@ export default function Home() {
     repeat: Infinity,
     ease: "linear",
   }}
-className="flex gap-7 whitespace-nowrap text-[#7f5fb1] text-2xl md:text-2xl font-serif font-medium ">
+className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-2xl md:text-2xl font-serif font-medium ">
   <span>🌸 Hecho con amor</span>
   <span>🍰 Tortas personalizadas</span>
   <span>🎁 Regalos que enamoran</span>
@@ -422,11 +433,11 @@ className="flex gap-7 whitespace-nowrap text-[#7f5fb1] text-2xl md:text-2xl font
   className="
     py-16
     bg-gradient-to-b
-    from-[#efe3ff]
-    via-[#faf7ff]
+    from-[#f7eeee]
+    via-[#fdfafa]
     to-white
   "
->        <div className="container px-4 mx-auto">
+>       <div className="container px-4 mx-auto">
           <motion.div
   initial="hidden"
   whileInView="visible"
@@ -439,19 +450,19 @@ className="flex gap-7 whitespace-nowrap text-[#7f5fb1] text-2xl md:text-2xl font
     mx-auto
     rounded-[40px]
     border-2
-    border-[#d8c3f1]
+    border-[#ddbabc]
     bg-white/50
     backdrop-blur-sm
-    shadow-[0_10px_40px_rgba(203,175,236,0.18)]
+    shadow-[0_10px_40px_rgba(161,122,126,0.15)]
     p-8
     md:p-10
     relative
   "
 >
   <div className="flex items-center justify-center gap-4 mb-4">
-    <div className="h-px w-20 bg-[#cbafec]" />
-    <span className="text-[#9b7ac7] text-2xl">❀</span>
-    <div className="h-px w-20 bg-[#cbafec]" />
+    <div className="h-px w-20 bg-[#c2a1a3]" />
+    <span className="text-[#a17a7e] text-2xl">❀</span>
+    <div className="h-px w-20 bg-[#c2a1a3]" />
   </div>
 
   <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
@@ -462,7 +473,7 @@ className="flex gap-7 whitespace-nowrap text-[#7f5fb1] text-2xl md:text-2xl font
     Explorá nuestras delicias artesanales, elaboradas diariamente con ingredientes seleccionados y mucho amor.
   </p>
 
-  <div className="mt-4 text-[#cbafec] text-lg">
+  <div className="mt-4 text-[#c2a1a3] text-lg">
     ♡ ♡ ♡
   </div>
 </motion.div>
@@ -476,8 +487,8 @@ className="flex gap-7 whitespace-nowrap text-[#7f5fb1] text-2xl md:text-2xl font
 className={cn(
   "rounded-full px-8 py-3 font-semibold tracking-wide transition-all duration-300",
   activeCategory === cat.key
-    ? "bg-[#7f5fb1] text-white shadow-xl scale-105"
-    : "bg-[#faf7ff] text-[#8f6fc0] border border-[#e5d8f7] hover:bg-[#cbafec] hover:text-white"
+  ? "bg-[#a17a7e] text-white shadow-xl scale-105"
+  : "bg-[#fdfafa] text-[#a17a7e] border border-[#ddbabc] hover:bg-[#c2a1a3] hover:text-white"
 )}
 >
   {cat.label}
@@ -526,7 +537,7 @@ className={cn(
                                 className={cn(
                                   "w-8 h-8 rounded-full border flex items-center justify-center transition-colors",
                                   qty > 0
-                                    ? "border-primary text-primary hover:bg-primary hover:text-white"
+                                    ? "border-[#c2a1a3] text-[#a17a7e] hover:bg-[#c2a1a3] hover:text-white"
                                     : "border-border text-muted-foreground opacity-40 cursor-not-allowed"
                                 )}
                               >
@@ -535,7 +546,7 @@ className={cn(
                               <span className="w-6 text-center font-semibold text-sm tabular-nums">{qty}</span>
                               <button
                                 onClick={() => increment(item.id)}
-                                className="w-8 h-8 rounded-full border border-primary bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-colors"
+                                className="w-8 h-8 rounded-full border border-[#a17a7e] bg-[#a17a7e] text-white flex items-center justify-center hover:bg-[#8d676b] transition-colors"
                               >
                                 <Plus className="w-3.5 h-3.5" />
                               </button>
@@ -552,33 +563,64 @@ className={cn(
 
           {/* Cart strip */}
           <AnimatePresence>
-            {cartCount > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
-                className="mt-12 bg-white border border-primary/20 rounded-2xl shadow-lg p-5 flex flex-col sm:flex-row items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
-                  <ShoppingBag className="w-5 h-5 text-primary shrink-0" />
-                  <span className="font-semibold">
-                    {cartCount} {cartCount === 1 ? "producto" : "productos"} seleccionados
-                  </span>
-                  <span className="text-muted-foreground hidden sm:inline">·</span>
-                  <span className="font-bold text-primary text-lg">${cartTotal.toLocaleString("es-AR")}</span>
-                </div>
-                <div className="flex gap-3">
-                  <Button variant="outline" size="sm" className="rounded-full" onClick={() => setCartOpen(true)}>
-                    Ver pedido
-                  </Button>
-                  <Button size="sm" className="rounded-full gap-2" onClick={sendCartOrder}>
-                    <SiWhatsapp className="w-4 h-4" />
-                    Enviar por WhatsApp
-                  </Button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+  {cartCount > 0 && (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 30 }}
+      className="mt-12 bg-white border border-[#ddbabc] rounded-2xl shadow-lg p-5 flex flex-col sm:flex-row items-center justify-between gap-4"
+    >
+      <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
+        <ShoppingBag className="w-5 h-5 text-[#a17a7e]" />
+
+        <span className="font-semibold text-[#5f3f43]">
+          {cartCount} {cartCount === 1 ? "producto" : "productos"} seleccionados
+        </span>
+
+        <span className="text-[#c2a1a3] hidden sm:inline">·</span>
+
+        <span className="font-bold text-[#a17a7e] text-lg">
+          ${cartTotal.toLocaleString("es-AR")}
+        </span>
+      </div>
+
+      <div className="flex gap-3">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setCartOpen(true)}
+          className="
+  rounded-full
+  gap-2
+  relative
+  bg-[#fdf6f6]
+  border-[#ddbabc]
+  text-[#a17a7e]
+  hover:bg-[#f6ebeb]
+  shadow-[0_8px_25px_rgba(161,122,126,0.15)]
+"
+        >
+          Ver pedido
+        </Button>
+
+        <Button
+          size="sm"
+          onClick={sendCartOrder}
+          className="
+            rounded-full
+            gap-2
+            bg-[#a17a7e]
+            hover:bg-[#8d676b]
+            text-white
+          "
+        >
+          <SiWhatsapp className="w-4 h-4" />
+          Enviar por WhatsApp
+        </Button>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
         </div>
       </section>
 
@@ -636,23 +678,36 @@ className={cn(
 
             <div className="space-y-6">
               <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#faf7ff] border border-[#e5d8f7] shadow-[0_4px_15px_rgba(203,175,236,0.35)] flex items-center justify-center shrink-0 text-[#9b7ac7]">
-                  <Star className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">Diseños Únicos</h3>
-                  <p className="text-sm text-muted-foreground">Cada pedido especial es diseñado a medida para tu evento.</p>
-                </div>
-              </div>
-              <div className="flex gap-4">
-                <div className="w-12 h-12 rounded-full bg-[#faf7ff] border border-[#e5d8f7] shadow-[0_4px_15px_rgba(203,175,236,0.35)] flex items-center justify-center shrink-0 text-[#9b7ac7]">
-                  <Clock className="w-5 h-5" />
-                </div>
-                <div>
-                  <h3 className="font-semibold text-lg">Anticipación</h3>
-                  <p className="text-sm text-muted-foreground">Sugerimos realizar pedidos personalizados con 48hs de anticipación.</p>
-                </div>
-              </div>
+  <div className="w-14 h-14 rounded-2xl bg-[#fdf6f6] border border-[#ddbabc] shadow-[0_8px_25px_rgba(161,122,126,0.15)] flex items-center justify-center shrink-0">
+    <Star className="w-6 h-6 text-[#a17a7e]" fill="currentColor" />
+  </div>
+
+  <div>
+    <h3 className="font-semibold text-lg text-[#7f5f63]">
+      Diseños Únicos
+    </h3>
+
+    <p className="text-sm text-muted-foreground">
+      Cada pedido especial es diseñado a medida para tu evento.
+    </p>
+  </div>
+</div>
+
+<div className="flex gap-4">
+  <div className="w-14 h-14 rounded-2xl bg-[#fdf6f6] border border-[#ddbabc] shadow-[0_8px_25px_rgba(161,122,126,0.15)] flex items-center justify-center shrink-0">
+    <Clock className="w-6 h-6 text-[#a17a7e]" />
+  </div>
+
+  <div>
+    <h3 className="font-semibold text-lg text-[#7f5f63]">
+      Anticipación
+    </h3>
+
+    <p className="text-sm text-muted-foreground">
+      Sugerimos realizar pedidos personalizados con 48hs de anticipación.
+    </p>
+  </div>
+</div>
             </div>
           </motion.div>
         </div>
@@ -661,36 +716,47 @@ className={cn(
       {/* ── Contacto & Footer ── */}
 <footer
   id="contacto"
-  className="bg-[#7f5fb1] text-white pt-7 pb-5"
->        <div className="container px-4 mx-auto">
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5">
-            <div>
-              <h2 className="text-2xl font-serif font-bold mb-2 text-primary-foreground">Dulce Palo</h2>
-              <div className="flex gap-3">
-                <a href="#" className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary hover:text-white transition-colors">
-                  <SiInstagram className="w-4 h-4" />
-                </a>
-                <a
-                  href={`https://wa.me/${WHATSAPP_NUMBER}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-colors"
-                >
-                  <SiWhatsapp className="w-4 h-4" />
-                </a>
-              </div>
-            </div>
+  className="bg-[#a17a7e] text-white pt-7 pb-5"
+>
+  <div className="container px-4 mx-auto">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-5">
 
-            <div className="flex items-center gap-2 text-white/70 text-sm">
-<MapPin className="w-4 h-4 text-white shrink-0" />              <span>Monteros, Tucumán, Argentina</span>
-            </div>
-          </div>
+      <div>
+        <h2 className="text-2xl font-serif font-bold mb-2 text-white">
+          Dulce Palo
+        </h2>
 
-          <div className="border-t border-white/10 pt-4 text-center text-sm text-white/50">
-            © {new Date().getFullYear()} Dulce Palo Pastelería. Todos los derechos reservados.
-          </div>
+        <div className="flex gap-3">
+          <a
+            href="#"
+            className="w-8 h-8 rounded-full bg-[#c2a1a3] flex items-center justify-center hover:bg-[#ddbabc] hover:text-white transition-colors"
+          >
+            <SiInstagram className="w-4 h-4" />
+          </a>
+
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            target="_blank"
+            rel="noreferrer"
+            className="w-8 h-8 rounded-full bg-[#c2a1a3] flex items-center justify-center hover:bg-[#25D366] hover:text-white transition-colors"
+          >
+            <SiWhatsapp className="w-4 h-4" />
+          </a>
         </div>
-      </footer>
+      </div>
+
+      <div className="flex items-center gap-2 text-white/90 text-sm">
+        <MapPin className="w-4 h-4 text-[#ddbabc] shrink-0" />
+        <span>Monteros, Tucumán, Argentina</span>
+      </div>
+
+    </div>
+
+    <div className="border-t border-[#ddbabc]/60 pt-4 text-center text-sm text-white/80">
+      © {new Date().getFullYear()} Dulce Palo Pastelería. Todos los derechos reservados.
+    </div>
+  </div>
+</footer>
 
       {/* ── Floating Contact FAB ── */}
       <AnimatePresence>
@@ -725,7 +791,7 @@ className={cn(
                     exit={{ opacity: 0, y: 16, scale: 0.8 }}
                     transition={{ duration: 0.2 }}
                     onClick={() => { makeCall(); setContactOpen(false); }}
-                    className="flex items-center gap-2 bg-[#faf7ff] text-[#8f6fc0] border border-[#e5d8f7] rounded-full px-4 py-2.5 shadow-[0_8px_25px_rgba(203,175,236,0.25)] hover:bg-[#f4ecff] transition-all duration-300 text-sm font-semibold"
+                    className="flex items-center gap-2 bg-[#fdfafa] text-[#a17a7e] border border-[#ddbabc] rounded-full px-4 py-2.5 shadow-[0_8px_25px_rgba(161,122,126,0.20)] hover:bg-[#f8f3f3] transition-all duration-300 text-sm font-semibold"
                   >
                     <Phone className="w-4 h-4 shrink-0" />
                     Llamar
@@ -738,11 +804,11 @@ className={cn(
             <button
               onClick={() => setContactOpen(o => !o)}
               className={cn(
-                "w-14 h-14 rounded-full shadow-xl flex items-center justify-center transition-all duration-300",
-                contactOpen
-                  ? "bg-[#8f6fc0] text-white rotate-45"
-                  : "bg-[#cbafec] text-white hover:bg-[#b999e4] hover:scale-110 shadow-[0_8px_25px_rgba(203,175,236,0.35)]"
-              )}
+  "w-14 h-14 rounded-full border-2 border-[#fdf6f6] shadow-[0_8px_30px_rgba(0,0,0,0.20)] flex items-center justify-center transition-all duration-300",
+  contactOpen
+    ? "bg-[#a17a7e] text-white rotate-45"
+    : "bg-[#c2a1a3] text-white hover:bg-[#ddbabc] hover:scale-110"
+)}
             >
               <Phone className="w-6 h-6" />
             </button>
@@ -768,11 +834,11 @@ className={cn(
               animate={{ x: 0 }}
               exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 28, stiffness: 220 }}
-              className="fixed right-0 top-0 h-full w-full max-w-sm bg-white z-50 shadow-2xl flex flex-col"
+              className="fixed right-0 top-0 h-full w-full max-w-sm bg-[#fdfafa] z-50 shadow-2xl flex flex-col"
             >
               <div className="flex items-center justify-between p-5 border-b">
                 <div className="flex items-center gap-2">
-                  <ShoppingBag className="w-5 h-5 text-primary" />
+                  <ShoppingBag className="w-5 h-5 text-[#a17a7e]" />
                   <h3 className="font-serif text-xl font-bold">Tu Pedido ({cartCount})</h3>
                 </div>
                 <button
@@ -796,14 +862,14 @@ className={cn(
                       />
                       <div className="flex-1 min-w-0">
                         <div className="font-medium text-sm truncate">{item.name}</div>
-                        <div className="text-primary font-semibold text-sm">
+                        <div className="text-[#a17a7e] font-semibold text-sm">
                           ${(item.price * (quantities[item.id] ?? 0)).toLocaleString("es-AR")}
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5 shrink-0">
                         <button
                           onClick={() => decrement(item.id)}
-                          className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:border-primary hover:text-primary transition-colors"
+                          className="w-7 h-7 rounded-full border border-border flex items-center justify-center hover:border-[#a17a7e] hover:text-[#a17a7e] transition-colors"
                         >
                           <Minus className="w-3 h-3" />
                         </button>
@@ -812,8 +878,7 @@ className={cn(
                         </span>
                         <button
                           onClick={() => increment(item.id)}
-                          className="w-7 h-7 rounded-full border border-primary bg-primary text-white flex items-center justify-center hover:bg-primary/90 transition-colors"
-                        >
+className="w-7 h-7 rounded-full border border-[#a17a7e] bg-[#a17a7e] text-white flex items-center justify-center hover:bg-[#8c686c] transition-colors"                        >
                           <Plus className="w-3 h-3" />
                         </button>
                       </div>
@@ -823,7 +888,7 @@ className={cn(
               </div>
 
               {cartItems.length > 0 && (
-                <div className="p-5 border-t bg-secondary/20">
+                <div className="p-5 border-t border-[#ddbabc] bg-[#f8f3f3]">
                   <button
                     onClick={clearCart}
                     className="w-full text-sm text-muted-foreground hover:text-destructive transition-colors mb-3 text-center"
@@ -832,12 +897,12 @@ className={cn(
                   </button>
                   <div className="flex justify-between mb-4">
                     <span className="text-muted-foreground">Total estimado</span>
-                    <span className="font-bold text-xl text-primary">${cartTotal.toLocaleString("es-AR")}</span>
+                    <span className="font-bold text-xl text-[#a17a7e]">${cartTotal.toLocaleString("es-AR")}</span>
                   </div>
                   <Button
-                    className="w-full rounded-full gap-2 text-base h-12 shadow-lg"
-                    onClick={sendCartOrder}
-                  >
+  className="w-full rounded-full gap-2 text-base h-12 bg-[#a17a7e] hover:bg-[#8c686c] text-white border-0 shadow-[0_8px_25px_rgba(161,122,126,0.35)]"
+  onClick={sendCartOrder}
+>
                     <SiWhatsapp className="w-5 h-5" />
                     Enviar Pedido por WhatsApp
                   </Button>
