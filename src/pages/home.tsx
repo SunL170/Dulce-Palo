@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ChevronDown, Star, MapPin, Clock, Plus, Minus, ShoppingBag, X, Phone, Heart } from "lucide-react";
+import { ChevronDown, ChevronLeft, ChevronRight, Star, MapPin, Clock, Plus, Minus, ShoppingBag, X, Phone, Heart } from "lucide-react";
 import { SiWhatsapp, SiInstagram } from "react-icons/si";
 
 import { Button } from "@/components/ui/button";
@@ -74,9 +74,23 @@ const PRODUCTS_BY_CATEGORY: Record<string, typeof ALL_PRODUCTS> = Object.fromEnt
 );
 
 const GALLERY = [
-  tortaChocImg, tortaRedVelvetImg, macaronsImg,
-  cheeseFrutosImg, cupcakesLimonImg, tortaVainillaImg,
-  cupcakesOreoImg, cheeseDulceImg, cupcakesRainbowImg,
+  {
+  id: 1,
+  name: "Torta Chocolate Frambuesa",
+  images: [
+    tortaChocImg,
+    tortaRedVelvetImg,
+    macaronsImg,
+  ]
+},
+  { id: 2, name: "Torta Red Velvet",          images: [tortaRedVelvetImg] },
+  { id: 3, name: "Macarons Surtidos",          images: [macaronsImg] },
+  { id: 4, name: "Cheesecake Frutos del Bosque", images: [cheeseFrutosImg] },
+  { id: 5, name: "Cupcakes Limón",             images: [cupcakesLimonImg] },
+  { id: 6, name: "Torta Vainilla",             images: [tortaVainillaImg] },
+  { id: 7, name: "Cupcakes Oreo",              images: [cupcakesOreoImg] },
+  { id: 8, name: "Cheesecake Dulce de Leche",  images: [cheeseDulceImg] },
+  { id: 9, name: "Cupcakes Rainbow",           images: [cupcakesRainbowImg] },
 ];
 
 export default function Home() {
@@ -89,6 +103,30 @@ export default function Home() {
   const [heartBeat, setHeartBeat] = useState(0);
   const [direction, setDirection] = useState(1);
   const [showAbout, setShowAbout] = useState(false);
+  const [selectedGalleryItem, setSelectedGalleryItem] = useState<typeof GALLERY[0] | null>(null);
+const [galleryImageIndex, setGalleryImageIndex] = useState(0);
+const openGalleryModal = (item: typeof GALLERY[0]) => {
+  setSelectedGalleryItem(item);
+  setGalleryImageIndex(0);
+};
+
+const closeGalleryModal = () => {
+  setSelectedGalleryItem(null);
+  setGalleryImageIndex(0);
+};
+
+const galleryPrev = (e: React.MouseEvent) => {
+  e.stopPropagation();
+  if (!selectedGalleryItem) return;
+  setGalleryImageIndex(i => (i - 1 + selectedGalleryItem.images.length) % selectedGalleryItem.images.length);
+};
+
+const galleryNext = (e: React.MouseEvent) => {
+  e.stopPropagation();
+  if (!selectedGalleryItem) return;
+  setGalleryImageIndex(i => (i + 1) % selectedGalleryItem.images.length);
+};
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const marqueeItems = [
   "Hecho con amor",
   "Cada detalle importa",
@@ -100,8 +138,6 @@ export default function Home() {
   "Para tus celebraciones",
   "Eventos Especiales",
   "Regalos que enamoran",
-  
-
 ];
 
   const cartItems = ALL_PRODUCTS.filter(p => (quantities[p.id] ?? 0) > 0);
@@ -692,31 +728,147 @@ className={cn(
           </div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6">
-            {GALLERY.map((img, i) => (
-              <motion.div
-                key={i}
-                initial={{ opacity: 0, scale: 0.96 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: (i % 3) * 0.1, duration: 0.6, ease: "easeOut" }}
-                className="aspect-square rounded-2xl overflow-hidden group cursor-pointer relative shadow-sm transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(161,122,126,0.45)] hover:-translate-y-1"
-              >
-                <img
-                  src={img}
-                  alt={`Galería ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#a17a7e]/80 via-[#a17a7e]/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex flex-col items-center justify-center gap-2">
-                  <SiInstagram className="text-white w-8 h-8 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300 delay-100" />
-                  <span className="text-white text-xs font-medium tracking-wide opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300 delay-150">
-                    Ver más
-                  </span>
-                </div>
-              </motion.div>
-            ))}
+            {GALLERY.map((item, i) => (
+  <motion.div
+    key={item.id}
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ delay: (i % 3) * 0.1, duration: 0.5 }}
+    onClick={() => openGalleryModal(item)}
+    className="aspect-square rounded-2xl overflow-hidden group cursor-pointer relative"
+  >
+    <img
+      src={item.images[0]}
+      alt={item.name}
+      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+    />
+    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      <SiInstagram className="text-white w-8 h-8 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300 delay-100" />
+    </div>
+    {item.images.length > 1 && (
+      <span className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {item.images.length} fotos
+      </span>
+    )}
+  </motion.div>
+))}
           </div>
         </div>
       </section>
+      {/* ── Modal de Galería ── */}
+{/* ── Modal de Galería ── */}
+<AnimatePresence>
+  {selectedGalleryItem && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      onClick={closeGalleryModal}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-black/70 backdrop-blur-sm"
+    >
+      <motion.div
+  initial={{ opacity: 0, scale: 0.92 }}
+  animate={{ opacity: 1, scale: 1 }}
+  exit={{ opacity: 0, scale: 0.92 }}
+  transition={{ duration: 0.3, ease: "easeOut" }}
+  onClick={(e) => e.stopPropagation()}
+  className="relative max-w-3xl w-full"
+>
+        {/* Imagen activa */}
+        <div className="rounded-3xl overflow-hidden shadow-2xl">
+  <AnimatePresence mode="wait">
+    <motion.img
+      key={galleryImageIndex}
+      src={selectedGalleryItem.images[galleryImageIndex]}
+      alt={selectedGalleryItem.name}
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.2 }}
+      className="w-full h-auto object-cover"
+    />
+  </AnimatePresence>
+</div>
+
+        {/* Flechas — solo si hay más de 1 imagen */}
+        {selectedGalleryItem.images.length > 1 && (
+          <>
+            <button
+              onClick={galleryPrev}
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-200"
+              aria-label="Imagen anterior"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={galleryNext}
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-200"
+              aria-label="Imagen siguiente"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
+        )}
+
+        {/* Navegación debajo de la imagen */}
+{selectedGalleryItem.images.length > 1 && (
+  <div className="mt-5 flex flex-col items-center gap-3">
+
+    <div className="flex items-center gap-8">
+      <button
+        onClick={galleryPrev}
+        className="text-white hover:text-white/70 transition-colors"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+
+      <span className="text-white text-sm font-medium">
+        {galleryImageIndex + 1} / {selectedGalleryItem.images.length}
+      </span>
+
+      <button
+        onClick={galleryNext}
+        className="text-white hover:text-white/70 transition-colors"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+    </div>
+
+    <div className="flex gap-2">
+      {selectedGalleryItem.images.map((_, idx) => (
+        <button
+          key={idx}
+          onClick={(e) => {
+            e.stopPropagation();
+            setGalleryImageIndex(idx);
+          }}
+          className={cn(
+            "w-2 h-2 rounded-full transition-all duration-300",
+            idx === galleryImageIndex
+              ? "bg-white scale-125"
+              : "bg-white/40"
+          )}
+        />
+      ))}
+    </div>
+
+  </div>
+)}
+
+        {/* Botón cerrar */}
+        <button
+          onClick={closeGalleryModal}
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-200"
+          aria-label="Cerrar imagen"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
 
       {/* ── Pedido Personalizado ── */}
       <section id="pedido" className="py-28 bg-secondary/30 relative overflow-hidden">
@@ -847,12 +999,12 @@ className={cn(
     </div>
 
     <div className="border-t border-[#ddbabc]/60 pt-5 text-center text-sm text-white/80 tracking-wide">
-      © {new Date().getFullYear()} Dulce Palo Pastelería. Todos los derechos reservados.
+      © {new Date().getFullYear()} Dulce Palo Pastelería.
     </div>
   </div>
 </footer>
 
-      {/* ── Floating Contact FAB ── */}
+      {/* ── Floating Contacto FAB ── */}
       <AnimatePresence>
         {isScrolled && (
           <motion.div
@@ -862,7 +1014,7 @@ className={cn(
             transition={{ duration: 0.25 }}
             className="fixed bottom-6 right-6 z-40 flex flex-col items-end gap-3"
           >
-            {/* Sub-buttons */}
+            {/* Sub-botones */}
             <AnimatePresence>
               {contactOpen && (
                 <>
