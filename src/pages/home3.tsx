@@ -251,7 +251,7 @@ const galleryNext = (e: React.MouseEvent) => {
         <div className="container mx-auto px-4 md:px-6 flex items-center justify-between">
           <div className="flex items-center gap-2">
   <span
-    className="font-serif text-4xl font-bold text-[#b68b8b]"
+    className="font-serif text-4xl font-bold text-[#a17a7e]"
     style={{ fontFamily: "Great Vibes" }}
   >
     Pastelería
@@ -311,12 +311,12 @@ const galleryNext = (e: React.MouseEvent) => {
                   <Button
                     variant="outline"
                     size="sm"
-                    className="rounded-full gap-2 relative bg-[#f8eeee] border-[#d8b6b6] hover:bg-[#f3e5e5] shadow-[0_0_18px_rgba(214,182,182,0.45)] hover:shadow-[0_0_28px_rgba(214,182,182,0.7)] transition-all duration-300"
+                    className="rounded-full gap-2 relative"
                     onClick={() => setCartOpen(true)}
                   >
                     <ShoppingBag className="w-4 h-4" />
                     <span className="hidden sm:inline">Pedido</span>
-                    <span className="absolute -top-1.5 -right-1.5 bg-[#b68b8b] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
+                    <span className="absolute -top-1.5 -right-1.5 bg-[#a17a7e] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">
                       {cartCount}
                     </span>
                   </Button>
@@ -376,7 +376,7 @@ const galleryNext = (e: React.MouseEvent) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-[115vw] max-w-none md:max-w-[600px] lg:max-w-[680px] h-auto mb-0 drop-shadow-2xl"
+            className="w-[85vw] max-w-[420px] md:max-w-[600px] lg:max-w-[680px] h-auto mb-0 drop-shadow-2xl"
           />
 
           {/* Tagline */}
@@ -392,29 +392,29 @@ const galleryNext = (e: React.MouseEvent) => {
 
           {/* CTAs */}
           <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 0.6 }}
-  className="absolute bottom-2 left-1/2 -translate-x-1/2 md:bottom-12 md:left-16 md:translate-x-0"
->
-  <Button
-    size="lg"
-    variant="outline"
-    className="rounded-full gap-2.5 h-12 px-8 text-sm font-semibold bg-white/10 backdrop-blur-md border-white/40 text-white hover:bg-white/20 hover:border-white/60 transition-all duration-300 hover:-translate-y-0.5 shadow-lg"
-    onClick={() => {
-  const catalogo = document.getElementById("catalogo");
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center"
+          >
+            <Button
+              size="lg"
+              className="rounded-full gap-2.5 h-12 px-7 text-sm font-semibold bg-[#a17a7e] text-white border-0 shadow-[0_8px_25px_rgba(161,122,126,0.5)] hover:bg-[#8c686c] hover:shadow-[0_12px_32px_rgba(161,122,126,0.6)] transition-all duration-300 hover:-translate-y-0.5"
+              onClick={() => openWhatsApp("Hola! Me gustaría hacer un pedido.")}
+            >
+              <SiWhatsapp className="w-4 h-4" />
+              Pedir por WhatsApp
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              className="rounded-full gap-2.5 h-12 px-7 text-sm font-semibold bg-white/10 backdrop-blur-sm border-white/40 text-white hover:bg-white/20 hover:border-white/60 transition-all duration-300 hover:-translate-y-0.5"
+              onClick={() => document.getElementById("catalogo")?.scrollIntoView({ behavior: "smooth" })}
+            >
+              Ver Catálogo
+            </Button>
+          </motion.div>
 
-  if (catalogo) {
-    window.scrollTo({
-      top: catalogo.offsetTop - 150,
-      behavior: "smooth",
-    });
-  }
-}}
-  >
-    Ver Catálogo
-  </Button>
-</motion.div>
           {/* Sobre mí */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -472,16 +472,7 @@ const galleryNext = (e: React.MouseEvent) => {
                         <div className="mt-8">
                           <button
                             style={{ fontFamily: "Great Vibes" }}
-                            onClick={() => {
-  setShowAbout(false);
-
-  setTimeout(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, 300);
-}}
+                            onClick={() => setShowAbout(false)}
                             className="px-6 py-2 rounded-full bg-[#a17a7e] text-2xl text-white hover:bg-[#8c686c] transition-all duration-300 shadow-md"
                           >
                             Cerrar
@@ -496,12 +487,42 @@ const galleryNext = (e: React.MouseEvent) => {
           </motion.div>
         </div>
 
+        {/* ── Indicador del slider ── */}
+        <div className="absolute bottom-14 left-1/2 -translate-x-1/2 z-10 flex items-center gap-5">
+          {HERO_SLIDES.map((slide, idx) => (
+            <button
+              key={idx}
+              onClick={() => goToSlide(idx)}
+              className="flex flex-col items-center gap-1.5 group"
+              aria-label={`Ir a slide ${idx + 1}`}
+            >
+              {/* Número */}
+              <span className={cn(
+                "text-xs font-mono font-semibold tracking-widest transition-all duration-300",
+                idx === heroIndex ? "text-white" : "text-white/40 group-hover:text-white/70"
+              )}>
+                {String(idx + 1).padStart(2, "0")}
+              </span>
+              {/* Barra de progreso */}
+              <div className="w-8 h-[2px] rounded-full bg-white/20 overflow-hidden">
+                <motion.div
+                  className="h-full bg-white rounded-full origin-left"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: idx === heroIndex ? heroProgress / 100 : idx < heroIndex ? 1 : 0 }}
+                  transition={{ duration: 0.05, ease: "linear" }}
+                  style={{ transformOrigin: "left" }}
+                />
+              </div>
+            </button>
+          ))}
+        </div>
+
         {/* ── Indicador de scroll ── */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1, y: [0, 8, 0] }}
           transition={{ opacity: { delay: 1.2, duration: 0.6 }, y: { delay: 1.2, duration: 2, repeat: Infinity, ease: "easeInOut" } }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white/40"
+          className="absolute bottom-6 right-6 z-10 text-white/40"
         >
           <ChevronDown className="w-5 h-5" />
         </motion.div>
@@ -531,45 +552,75 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
 </motion.section>
 
       {/* ── Catálogo ── */}
-      <section id="catalogo" className="py-20 bg-[#fdfafa]">
-        <div className="container px-4 mx-auto">
-
-          {/* Header */}
+<section
+  id="catalogo"
+  className="
+    py-16
+    bg-gradient-to-b
+    from-[#f7eeee]
+    via-[#fdfafa]
+    to-white
+  "
+>       <div className="container px-4 mx-auto">
           <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, margin: "-100px" }}
-            variants={fadeIn}
-            className="text-center mb-14"
-          >
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-              Pastelería artesanal
-            </p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
-              Nuestro Catálogo
-            </h2>
-            <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto" />
-          </motion.div>
+  initial="hidden"
+  whileInView="visible"
+  viewport={{ once: true, margin: "-100px" }}
+  variants={fadeIn}
+  className="
+    text-center
+    mb-16
+    max-w-4xl
+    mx-auto
+    rounded-[40px]
+    border-2
+    border-[#ddbabc]
+    bg-white/50
+    backdrop-blur-sm
+    shadow-[0_10px_40px_rgba(161,122,126,0.15)]
+    p-8
+    md:p-10
+    relative
+  "
+>
+  <div className="flex items-center justify-center gap-4 mb-4">
+    <div className="h-px w-20 bg-[#c2a1a3]" />
+    <span className="text-[#a17a7e] text-2xl">❀</span>
+    <div className="h-px w-20 bg-[#c2a1a3]" />
+  </div>
+
+  <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
+    Nuestro Catálogo
+  </h2>
+
+  <p className="text-muted-foreground max-w-2xl mx-auto">
+    <span className="text-[#a17a7e] text-2xl">❀</span>Explorá nuestras delicias artesanales.<span className="text-[#a17a7e] text-2xl">❀</span>
+  </p>
+
+  <div className="mt-4 text-[#c2a1a3] text-lg">
+     
+  </div>
+</motion.div>
 
           {/* Category pills */}
           <div className="w-full max-w-3xl mx-auto flex flex-wrap justify-center gap-2 mb-12">
             {CATALOG_CATEGORIES.map(cat => (
               <button
-                key={cat.key}
-                onClick={() => setActiveCategory(activeCategory === cat.key ? null : cat.key)}
-                className={cn(
-                  "rounded-full px-6 py-2.5 text-sm font-semibold tracking-wide transition-all duration-300",
-                  activeCategory === cat.key
-                    ? "bg-[#a17a7e] text-white shadow-[0_8px_24px_rgba(161,122,126,0.4)] scale-105"
-                    : "bg-white text-[#a17a7e] border border-[#ddbabc] hover:border-[#a17a7e] hover:shadow-[0_4px_14px_rgba(161,122,126,0.2)] hover:-translate-y-0.5"
-                )}
-              >
-                {cat.label}
-              </button>
+  key={cat.key}
+  onClick={() => setActiveCategory(activeCategory === cat.key ? null : cat.key)}
+className={cn(
+  "rounded-full px-8 py-3 font-semibold tracking-wide transition-all duration-300",
+  activeCategory === cat.key
+  ? "bg-[#a17a7e] text-white shadow-[0_8px_24px_rgba(161,122,126,0.45)] scale-105"
+  : "bg-[#fdfafa] text-[#a17a7e] border border-[#ddbabc] hover:bg-[#c2a1a3] hover:text-white hover:shadow-[0_6px_18px_rgba(161,122,126,0.25)] hover:-translate-y-0.5"
+)}
+>
+  {cat.label}
+</button>
             ))}
           </div>
 
-          {/* Product grid */}
+          {/* Expandable product grid */}
           <AnimatePresence initial={false}>
             {activeCategory && (
               <motion.div
@@ -579,7 +630,7 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
                 exit={{ opacity: 0, y: 16 }}
                 transition={{ duration: 0.3, ease: "easeInOut" }}
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                   {(PRODUCTS_BY_CATEGORY[activeCategory] ?? []).map((item, i) => {
                     const qty = quantities[item.id] ?? 0;
                     return (
@@ -587,66 +638,60 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
                         key={item.id}
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: i * 0.07 }}
+                        transition={{ delay: i * 0.1 }}
                       >
-                        <div className="group bg-white rounded-3xl overflow-hidden border border-[#f0e0e0] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_50px_-12px_rgba(161,122,126,0.3)] hover:border-[#ddbabc]">
-                          <div className="aspect-[4/3] overflow-hidden relative bg-[#fdf6f6]">
+                        <Card className="h-full overflow-hidden border-border/50 transition-all duration-300 hover:-translate-y-1.5 hover:border-[#ddbabc] hover:shadow-[0_18px_45px_-12px_rgba(161,122,126,0.35)] group bg-background/50 backdrop-blur-sm">
+                          <div className="aspect-[4/3] overflow-hidden relative">
                             <img
                               src={item.img}
                               alt={item.name}
                               className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                             />
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#5f3f43]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                            <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#a17a7e] text-[10px] font-bold tracking-[0.15em] uppercase px-3 py-1 rounded-full border border-[#ddbabc]/60">
-                              {item.category}
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#a17a7e]/25 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                          </div>
+                          <CardHeader>
+                            <CardTitle className="font-serif text-xl">{item.name}</CardTitle>
+                            <CardDescription className="text-sm line-clamp-2">{item.desc}</CardDescription>
+                          </CardHeader>
+                          <CardFooter className="flex items-center justify-between border-t border-border/50 pt-4 mt-auto">
+                            <span className="font-semibold text-lg text-[#a17a7e] flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#c2a1a3]" />
+                              ${item.price.toLocaleString("es-AR")}
                             </span>
-                          </div>
-                          <div className="p-5">
-                            <h3 className="font-serif font-bold text-lg text-[#3d2527] mb-1 leading-snug">
-                              {item.name}
-                            </h3>
-                            <p className="text-sm text-[#9c7679] line-clamp-2 mb-4 leading-relaxed">
-                              {item.desc}
-                            </p>
-                            <div className="flex items-center justify-between pt-3 border-t border-[#f0e0e0]">
-                              <span className="font-bold text-xl text-[#a17a7e]">
-                                ${item.price.toLocaleString("es-AR")}
-                              </span>
-                              <div className="flex items-center gap-2">
-                                <button
-                                  onClick={() => decrement(item.id)}
-                                  disabled={qty === 0}
-                                  className={cn(
-                                    "w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-200",
-                                    qty > 0
-                                      ? "border-[#c2a1a3] text-[#a17a7e] hover:bg-[#a17a7e] hover:text-white hover:border-[#a17a7e]"
-                                      : "border-[#e8d5d5] text-[#d4b4b4] cursor-not-allowed"
-                                  )}
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => decrement(item.id)}
+                                disabled={qty === 0}
+                                className={cn(
+                                  "w-8 h-8 rounded-full border flex items-center justify-center transition-colors",
+                                  qty > 0
+                                    ? "border-[#c2a1a3] text-[#a17a7e] hover:bg-[#c2a1a3] hover:text-white"
+                                    : "border-border text-muted-foreground opacity-40 cursor-not-allowed"
+                                )}
+                              >
+                                <Minus className="w-3.5 h-3.5" />
+                              </button>
+                              <AnimatePresence mode="popLayout" initial={false}>
+                                <motion.span
+                                  key={qty}
+                                  initial={{ scale: 0.6, opacity: 0 }}
+                                  animate={{ scale: 1, opacity: 1 }}
+                                  exit={{ scale: 0.6, opacity: 0 }}
+                                  transition={{ duration: 0.18 }}
+                                  className="w-6 text-center font-semibold text-sm tabular-nums inline-block"
                                 >
-                                  <Minus className="w-3.5 h-3.5" />
-                                </button>
-                                <AnimatePresence mode="popLayout" initial={false}>
-                                  <motion.span
-                                    key={qty}
-                                    initial={{ scale: 0.6, opacity: 0 }}
-                                    animate={{ scale: 1, opacity: 1 }}
-                                    exit={{ scale: 0.6, opacity: 0 }}
-                                    transition={{ duration: 0.18 }}
-                                    className="w-6 text-center font-bold text-sm tabular-nums inline-block text-[#3d2527]"
-                                  >
-                                    {qty}
-                                  </motion.span>
-                                </AnimatePresence>
-                                <button
-                                  onClick={() => increment(item.id)}
-                                  className="w-8 h-8 rounded-full bg-[#a17a7e] text-white flex items-center justify-center hover:bg-[#8d676b] transition-colors duration-200 shadow-[0_4px_12px_rgba(161,122,126,0.4)]"
-                                >
-                                  <Plus className="w-3.5 h-3.5" />
-                                </button>
-                              </div>
+                                  {qty}
+                                </motion.span>
+                              </AnimatePresence>
+                              <button
+                                onClick={() => increment(item.id)}
+                                className="w-8 h-8 rounded-full border border-[#a17a7e] bg-[#a17a7e] text-white flex items-center justify-center hover:bg-[#8d676b] transition-colors"
+                              >
+                                <Plus className="w-3.5 h-3.5" />
+                              </button>
                             </div>
-                          </div>
-                        </div>
+                          </CardFooter>
+                        </Card>
                       </motion.div>
                     );
                   })}
@@ -657,199 +702,220 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
 
           {/* Cart strip */}
           <AnimatePresence>
-            {cartCount > 0 && (
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 30 }}
-                className="mt-12 bg-white border border-[#ddbabc] rounded-2xl shadow-lg p-5 flex flex-col sm:flex-row items-center justify-between gap-4"
-              >
-                <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
-                  <ShoppingBag className="w-5 h-5 text-[#a17a7e]" />
-                  <span className="font-semibold text-[#5f3f43]">
-                    {cartCount} {cartCount === 1 ? "producto" : "productos"} seleccionados
-                  </span>
-                  <span className="text-[#c2a1a3] hidden sm:inline">·</span>
-                  <span className="font-bold text-[#a17a7e] text-lg">
-                    ${cartTotal.toLocaleString("es-AR")}
-                  </span>
-                </div>
-                <div className="flex gap-3">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => setCartOpen(true)}
-                    className="rounded-full gap-2 bg-[#fdf6f6] border-[#ddbabc] text-[#a17a7e] hover:bg-[#f6ebeb] shadow-[0_8px_25px_rgba(161,122,126,0.15)]"
-                  >
-                    Ver pedido
-                  </Button>
-                  <Button
-                    size="sm"
-                    onClick={sendCartOrder}
-                    className="rounded-full gap-2 bg-[#a17a7e] hover:bg-[#8d676b] text-white"
-                  >
-                    <SiWhatsapp className="w-4 h-4" />
-                    Enviar por WhatsApp
-                  </Button>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+  {cartCount > 0 && (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: 30 }}
+      className="mt-12 bg-white border border-[#ddbabc] rounded-2xl shadow-lg p-5 flex flex-col sm:flex-row items-center justify-between gap-4"
+    >
+      <div className="flex items-center gap-3 flex-wrap justify-center sm:justify-start">
+        <ShoppingBag className="w-5 h-5 text-[#a17a7e]" />
 
+        <span className="font-semibold text-[#5f3f43]">
+          {cartCount} {cartCount === 1 ? "producto" : "productos"} seleccionados
+        </span>
+
+        <span className="text-[#c2a1a3] hidden sm:inline">·</span>
+
+        <span className="font-bold text-[#a17a7e] text-lg">
+          ${cartTotal.toLocaleString("es-AR")}
+        </span>
+      </div>
+
+      <div className="flex gap-3">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setCartOpen(true)}
+          className="
+  rounded-full
+  gap-2
+  relative
+  bg-[#fdf6f6]
+  border-[#ddbabc]
+  text-[#a17a7e]
+  hover:bg-[#f6ebeb]
+  shadow-[0_8px_25px_rgba(161,122,126,0.15)]
+"
+        >
+          Ver pedido
+        </Button>
+
+        <Button
+          size="sm"
+          onClick={sendCartOrder}
+          className="
+            rounded-full
+            gap-2
+            bg-[#a17a7e]
+            hover:bg-[#8d676b]
+            text-white
+          "
+        >
+          <SiWhatsapp className="w-4 h-4" />
+          Enviar por WhatsApp
+        </Button>
+      </div>
+    </motion.div>
+  )}
+</AnimatePresence>
         </div>
       </section>
 
       {/* ── Galería ── */}
-      <section id="galeria" className="py-20 bg-[#fdfafa]">
+      <section id="galeria" className="py-20 bg-white">
         <div className="container px-4 mx-auto">
-
-          {/* Header */}
-          <div className="text-center mb-14">
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-              Nuestras creaciones
-            </p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
-              Nuestra Galería
-            </h2>
-            <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto mb-5" />
-            <p className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
-              <SiInstagram className="text-[#a17a7e]" />
-              <span>Seguinos en <a href="#" className="font-semibold text-[#a17a7e] hover:text-[#8d676b] transition-colors">@dulce.palo</a></span>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">Nuestra Galería</h2>
+            <p className="text-muted-foreground max-w-2xl mx-auto flex items-center justify-center gap-2 ">
+              <SiInstagram className="text-primary" />
+              <span>Seguinos en <a href="#" className="font-semibold hover:text-primary transition-colors">@dulce.palo</a></span>
             </p>
           </div>
 
-          {/* Grid estilo editorial */}
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-2 sm:gap-4 md:gap-6">
             {GALLERY.map((item, i) => (
-              <motion.div
-                key={item.id}
-                initial={{ opacity: 0, scale: 0.96 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: (i % 3) * 0.08, duration: 0.55, ease: "easeOut" }}
-                onClick={() => openGalleryModal(item)}
-                className={cn(
-                  "relative overflow-hidden rounded-2xl cursor-pointer group",
-                  "bg-[#fdf6f6] shadow-sm",
-                  "transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_20px_45px_-12px_rgba(161,122,126,0.4)]",
-                  i === 0 ? "row-span-2 aspect-[3/4] md:aspect-auto" : "aspect-square"
-                )}
-              >
-                <img
-                  src={item.images[0]}
-                  alt={item.name}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                {/* Overlay tintado */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#3d2527]/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-all duration-400" />
-                {/* Info en hover */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
-                  <p className="text-white font-semibold text-sm leading-tight line-clamp-1">{item.name}</p>
-                  <p className="text-white/70 text-xs mt-0.5 flex items-center gap-1">
-                    <SiInstagram className="w-3 h-3" /> Ver más
-                  </p>
-                </div>
-                {/* Badge múltiples fotos */}
-                {item.images.length > 1 && (
-                  <div className="absolute top-3 right-3 bg-black/40 backdrop-blur-sm text-white text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1">
-                    <span>+{item.images.length - 1}</span>
-                  </div>
-                )}
-              </motion.div>
-            ))}
+  <motion.div
+    key={item.id}
+    initial={{ opacity: 0, scale: 0.9 }}
+    whileInView={{ opacity: 1, scale: 1 }}
+    viewport={{ once: true }}
+    transition={{ delay: (i % 3) * 0.1, duration: 0.5 }}
+    onClick={() => openGalleryModal(item)}
+    className="aspect-square rounded-2xl overflow-hidden group cursor-pointer relative"
+  >
+    <img
+      src={item.images[0]}
+      alt={item.name}
+      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+    />
+    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+      <SiInstagram className="text-white w-8 h-8 opacity-0 group-hover:opacity-100 scale-50 group-hover:scale-100 transition-all duration-300 delay-100" />
+    </div>
+    {item.images.length > 1 && (
+      <span className="absolute bottom-2 right-2 bg-black/50 text-white text-xs px-2 py-0.5 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        {item.images.length} fotos
+      </span>
+    )}
+  </motion.div>
+))}
           </div>
         </div>
       </section>
-
       {/* ── Modal de Galería ── */}
-      <AnimatePresence>
-        {selectedGalleryItem && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            onClick={closeGalleryModal}
-            className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center bg-black/80 backdrop-blur-md"
-          >
-            <motion.div
-              initial={{ opacity: 0, y: 40, scale: 0.96 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 40, scale: 0.96 }}
-              transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative w-full sm:max-w-2xl md:max-w-3xl sm:mx-4 bg-[#1a0f10] rounded-t-3xl sm:rounded-3xl overflow-hidden shadow-2xl"
+{/* ── Modal de Galería ── */}
+<AnimatePresence>
+  {selectedGalleryItem && (
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.25 }}
+      onClick={closeGalleryModal}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-10 bg-black/70 backdrop-blur-sm"
+    >
+      <motion.div
+  initial={{ opacity: 0, scale: 0.92 }}
+  animate={{ opacity: 1, scale: 1 }}
+  exit={{ opacity: 0, scale: 0.92 }}
+  transition={{ duration: 0.3, ease: "easeOut" }}
+  onClick={(e) => e.stopPropagation()}
+  className="relative max-w-3xl w-full"
+>
+        {/* Imagen activa */}
+        <div className="rounded-3xl overflow-hidden shadow-2xl">
+  <AnimatePresence mode="wait">
+    <motion.img
+      key={galleryImageIndex}
+      src={selectedGalleryItem.images[galleryImageIndex]}
+      alt={selectedGalleryItem.name}
+      initial={{ opacity: 0, x: 30 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -30 }}
+      transition={{ duration: 0.2 }}
+      className="w-full h-auto object-cover"
+    />
+  </AnimatePresence>
+</div>
+
+        {/* Flechas — solo si hay más de 1 imagen */}
+        {selectedGalleryItem.images.length > 1 && (
+          <>
+            <button
+              onClick={galleryPrev}
+              className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-200"
+              aria-label="Imagen anterior"
             >
-              {/* Imagen principal */}
-              <div className="relative aspect-[4/3] overflow-hidden bg-black">
-                <AnimatePresence mode="wait">
-                  <motion.img
-                    key={galleryImageIndex}
-                    src={selectedGalleryItem.images[galleryImageIndex]}
-                    alt={selectedGalleryItem.name}
-                    initial={{ opacity: 0, scale: 1.04 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.97 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="w-full h-full object-cover"
-                  />
-                </AnimatePresence>
-
-                {/* Flechas superpuestas — solo si hay más de 1 */}
-                {selectedGalleryItem.images.length > 1 && (
-                  <>
-                    <button
-                      onClick={galleryPrev}
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/65 backdrop-blur-sm text-white flex items-center justify-center transition-all duration-200 hover:scale-110"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={galleryNext}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/65 backdrop-blur-sm text-white flex items-center justify-center transition-all duration-200 hover:scale-110"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                  </>
-                )}
-
-                {/* Botón cerrar */}
-                <button
-                  onClick={closeGalleryModal}
-                  className="absolute top-3 right-3 w-9 h-9 rounded-full bg-black/40 hover:bg-black/65 backdrop-blur-sm text-white flex items-center justify-center transition-all duration-200"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              </div>
-
-              {/* Info + miniaturas */}
-              <div className="p-4 sm:p-5">
-                <p className="text-white font-serif font-semibold text-lg mb-1">{selectedGalleryItem.name}</p>
-
-                {/* Miniaturas — solo si hay más de 1 */}
-                {selectedGalleryItem.images.length > 1 && (
-                  <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
-                    {selectedGalleryItem.images.map((img, idx) => (
-                      <button
-                        key={idx}
-                        onClick={(e) => { e.stopPropagation(); setGalleryImageIndex(idx); }}
-                        className={cn(
-                          "shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all duration-200",
-                          idx === galleryImageIndex
-                            ? "border-[#c2a1a3] opacity-100 scale-105"
-                            : "border-transparent opacity-50 hover:opacity-80"
-                        )}
-                      >
-                        <img src={img} alt="" className="w-full h-full object-cover" />
-                      </button>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </motion.div>
-          </motion.div>
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              onClick={galleryNext}
+              className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-200"
+              aria-label="Imagen siguiente"
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
         )}
-      </AnimatePresence>
+
+        {/* Navegación debajo de la imagen */}
+{selectedGalleryItem.images.length > 1 && (
+  <div className="mt-5 flex flex-col items-center gap-3">
+
+    <div className="flex items-center gap-8">
+      <button
+        onClick={galleryPrev}
+        className="text-white hover:text-white/70 transition-colors"
+      >
+        <ChevronLeft className="w-5 h-5" />
+      </button>
+
+      <span className="text-white text-sm font-medium">
+        {galleryImageIndex + 1} / {selectedGalleryItem.images.length}
+      </span>
+
+      <button
+        onClick={galleryNext}
+        className="text-white hover:text-white/70 transition-colors"
+      >
+        <ChevronRight className="w-5 h-5" />
+      </button>
+    </div>
+
+    <div className="flex gap-2">
+      {selectedGalleryItem.images.map((_, idx) => (
+        <button
+          key={idx}
+          onClick={(e) => {
+            e.stopPropagation();
+            setGalleryImageIndex(idx);
+          }}
+          className={cn(
+            "w-2 h-2 rounded-full transition-all duration-300",
+            idx === galleryImageIndex
+              ? "bg-white scale-125"
+              : "bg-white/40"
+          )}
+        />
+      ))}
+    </div>
+
+  </div>
+)}
+
+        {/* Botón cerrar */}
+        <button
+          onClick={closeGalleryModal}
+          className="absolute top-4 right-4 w-9 h-9 rounded-full bg-black/50 hover:bg-black/70 text-white flex items-center justify-center transition-colors duration-200"
+          aria-label="Cerrar imagen"
+        >
+          <X className="w-4 h-4" />
+        </button>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
 
       {/* ── Pedido Personalizado ── */}
       <section id="pedido" className="py-28 bg-secondary/30 relative overflow-hidden">
