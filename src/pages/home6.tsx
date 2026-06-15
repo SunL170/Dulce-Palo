@@ -488,22 +488,21 @@ const galleryNext = (e: React.MouseEvent) => {
             Cada bocado, una obra de arte.
           </motion.p>
 
-          {/* CTA Ver Catálogo — centrado debajo del tagline */}
+          {/* CTA Ver Catálogo — esquina inferior izquierda */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            className="mb-8"
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 1.0 }}
+            className="absolute bottom-2 left-6 md:left-10 z-10"
           >
             <button
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 const catalogo = document.getElementById("catalogo");
                 if (catalogo) {
                   window.scrollTo({ top: catalogo.offsetTop - 60, behavior: "smooth" });
                 }
               }}
-              className="inline-flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300 group"
+              className="flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300 group"
             >
               <span
                 className="text-sm font-semibold tracking-[0.18em] uppercase"
@@ -511,7 +510,7 @@ const galleryNext = (e: React.MouseEvent) => {
               >
                 Ver Catálogo
               </span>
-              <span className="w-8 h-[1.5px] bg-white/50 group-hover:w-14 group-hover:bg-white/90 transition-all duration-300 rounded-full" />
+              <span className="w-8 h-[1.5px] bg-white/50 group-hover:w-14 group-hover:bg-white/90 transition-all duration-400 rounded-full" />
             </button>
           </motion.div>
           {/* Sobre mí */}
@@ -544,10 +543,10 @@ const galleryNext = (e: React.MouseEvent) => {
               {showAbout && (
                 <motion.div
                   id="about-content"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.6 }}
+                  initial={{ opacity: 0, maxHeight: 0 }}
+                  animate={{ opacity: 1, maxHeight: 800 }}
+                  exit={{ opacity: 0, maxHeight: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="overflow-hidden mt-8 w-full"
                 >
                   <div className="max-w-5xl mx-auto bg-[#fdf6f6] rounded-[32px] shadow-lg p-8 md:p-10">
@@ -572,15 +571,11 @@ const galleryNext = (e: React.MouseEvent) => {
                           <button
                             style={{ fontFamily: "Great Vibes" }}
                             onClick={() => {
-  setShowAbout(false);
-
-  setTimeout(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, 300);
-}}
+                              setShowAbout(false);
+                              setTimeout(() => {
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                              }, 300);
+                            }}
                             className="px-6 py-2 rounded-full bg-[#a17a7e] text-2xl text-white hover:bg-[#8c686c] transition-all duration-300 shadow-md"
                           >
                             Cerrar
@@ -608,15 +603,15 @@ const galleryNext = (e: React.MouseEvent) => {
       </section>
 
 
-<section className="py-20 bg-gradient-to-b from-white via-[#fdf6f6] to-[#fdfafa]">
+<section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
   <div className="container mx-auto px-4">
 
     <div className="text-center mb-14">
       <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-        Dulce Palo    
+        Creaciones de la casa
       </p>
       <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
-        Tortas Personalizadas
+        Productos Destacados
       </h2>
       <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto" />
     </div>
@@ -651,9 +646,14 @@ const galleryNext = (e: React.MouseEvent) => {
             <div className="aspect-[3/4] overflow-hidden">
               <img
                 src={item.image}
-                alt="Creación artesanal"
+                alt={item.title}
                 className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
               />
+            </div>
+            <div className="py-3 px-4 text-center">
+              <p className="text-sm font-semibold text-[#5f3f43] tracking-wide truncate">
+                {item.title}
+              </p>
             </div>
           </div>
         </SwiperSlide>
@@ -891,7 +891,7 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
       </section>
 
       {/* ── Galería ── */}
-      <section id="galeria" className="py-20 bg-gradient-to-b from-white via-[#fdf6f6] to-[#f8f0f0]">
+      <section id="galeria" className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
         <div className="container px-4 mx-auto">
 
           {/* Header */}

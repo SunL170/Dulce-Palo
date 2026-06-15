@@ -488,22 +488,21 @@ const galleryNext = (e: React.MouseEvent) => {
             Cada bocado, una obra de arte.
           </motion.p>
 
-          {/* CTA Ver Catálogo — centrado debajo del tagline */}
+          {/* CTA Ver Catálogo — esquina inferior izquierda */}
           <motion.div
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.7 }}
-            className="mb-8"
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.7, delay: 1.0 }}
+            className="absolute bottom-2 left-6 md:left-10 z-10"
           >
             <button
-              onClick={(e) => {
-                e.stopPropagation();
+              onClick={() => {
                 const catalogo = document.getElementById("catalogo");
                 if (catalogo) {
                   window.scrollTo({ top: catalogo.offsetTop - 60, behavior: "smooth" });
                 }
               }}
-              className="inline-flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300 group"
+              className="flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300 group"
             >
               <span
                 className="text-sm font-semibold tracking-[0.18em] uppercase"
@@ -511,7 +510,7 @@ const galleryNext = (e: React.MouseEvent) => {
               >
                 Ver Catálogo
               </span>
-              <span className="w-8 h-[1.5px] bg-white/50 group-hover:w-14 group-hover:bg-white/90 transition-all duration-300 rounded-full" />
+              <span className="w-8 h-[1.5px] bg-white/50 group-hover:w-14 group-hover:bg-white/90 transition-all duration-400 rounded-full" />
             </button>
           </motion.div>
           {/* Sobre mí */}
@@ -608,57 +607,69 @@ const galleryNext = (e: React.MouseEvent) => {
       </section>
 
 
-<section className="py-20 bg-gradient-to-b from-white via-[#fdf6f6] to-[#fdfafa]">
+<section className="py-20 bg-white">
   <div className="container mx-auto px-4">
 
-    <div className="text-center mb-14">
-      <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-        Dulce Palo    
-      </p>
-      <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
-        Tortas Personalizadas
-      </h2>
-      <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto" />
-    </div>
+    <h2 className="text-center text-4xl font-bold mb-12 text-[#a17a7e]">
+      Productos Destacados
+    </h2>
 
     <Swiper
-      effect="coverflow"
-      grabCursor={true}
-      centeredSlides={true}
-      slidesPerView={"auto"}
-      loop={true}
-      speed={700}
-      autoplay={{
-        delay: 3500,
-        disableOnInteraction: false,
-      }}
-      coverflowEffect={{
-        rotate: 0,
-        stretch: -10,
-        depth: 120,
-        modifier: 1.2,
-        scale: 0.92,
-        slideShadows: false,
-      }}
-      modules={[EffectCoverflow, Autoplay]}
+  effect="coverflow"
+  grabCursor={true}
+  centeredSlides={true}
+  slidesPerView={"auto"}
+  loop={true}
+  rewind={false}
+  speed={800}
+  autoplay={{
+    delay: 3000,
+    disableOnInteraction: false,
+  }}
+  coverflowEffect={{
+    rotate: 0,
+    stretch: -20,
+    depth: 200,
+    modifier: 1.5,
+    scale: 0.9,
+    slideShadows: false,
+  }}
+  pagination={{
+    clickable: true,
+  }}
+  modules={[EffectCoverflow, Pagination, Autoplay]}
+>
+  {FEATURED_PRODUCTS.map((item, index) => (
+    <SwiperSlide
+      key={index}
+      className="!w-[260px] md:!w-[320px] lg:!w-[360px]"
     >
-      {FEATURED_PRODUCTS.map((item, index) => (
-        <SwiperSlide
-          key={index}
-          className="!w-[240px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px]"
-        >
-          <div className="overflow-hidden rounded-xl border border-[#f0e0e0] bg-white">
-            <div className="aspect-[3/4] overflow-hidden">
-              <img
-                src={item.image}
-                alt="Creación artesanal"
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
+      <div className="bg-white rounded-[30px] overflow-hidden shadow-2xl">
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-[320px] md:h-[420px] object-cover"
+        />
+
+        <div className="p-6">
+          <h3 className="text-2xl font-bold text-[#5f3f43]">
+            {item.title}
+          </h3>
+
+          <div className="flex items-center justify-between mt-4">
+            <span className="font-bold text-[#a17a7e] text-xl">
+              {item.price}
+            </span>
+
+            <div className="text-yellow-500">
+              ⭐⭐⭐⭐⭐
             </div>
           </div>
-        </SwiperSlide>
-      ))}
-    </Swiper>
+        </div>
+      </div>
+    </SwiperSlide>
+  ))}
+</Swiper>
 
   </div>
 </section>
