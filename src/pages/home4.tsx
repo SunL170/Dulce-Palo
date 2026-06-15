@@ -94,9 +94,9 @@ const GALLERY = [
 ];
 
 const HERO_SLIDES = [
-  { img: heroBackground,      label: "Detalles que enamoran" },
+  { img: heroBackground,      label: "Pastelería artesanal" },
   { img: tortaChocImg,        label: "Tortas personalizadas" },
-  { img: macaronsImg,         label: "Pastelería artesanal" },
+  { img: macaronsImg,         label: "Detalles que enamoran" },
   { img: cheeseFrutosImg,     label: "Cada bocado, una obra" },
   { img: cupcakesRainbowImg,  label: "Celebraciones especiales" },
 ];
@@ -111,12 +111,10 @@ export default function Home() {
   const [heartBeat, setHeartBeat] = useState(0);
   const [direction, setDirection] = useState(1);
   const [showAbout, setShowAbout] = useState(false);
-  const [heroIndex, setHeroIndex] = useState(1);
+  const [heroIndex, setHeroIndex] = useState(0);
   const [heroProgress, setHeroProgress] = useState(0);
-  const [touchStart, setTouchStart] = useState(0);
   const heroIntervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const heroProgressRef = useRef<ReturnType<typeof setInterval> | null>(null);
-  const productsGridRef = useRef<HTMLDivElement>(null);
 
   const SLIDE_DURATION = 5500; // ms
   const PROGRESS_TICK = 50;    // ms
@@ -141,15 +139,6 @@ export default function Home() {
     setHeroIndex(idx);
     startHeroTimer();
   };
-  const nextSlide = () => {
-  setHeroIndex(i => (i + 1) % HERO_SLIDES.length);
-  startHeroTimer();
-};
-
-const prevSlide = () => {
-  setHeroIndex(i => (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
-  startHeroTimer();
-};
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<typeof GALLERY[0] | null>(null);
 const [galleryImageIndex, setGalleryImageIndex] = useState(0);
 const openGalleryModal = (item: typeof GALLERY[0]) => {
@@ -198,13 +187,6 @@ const galleryNext = (e: React.MouseEvent) => {
       if (heroProgressRef.current) clearInterval(heroProgressRef.current);
     };
   }, [startHeroTimer]);
-  useEffect(() => {
-  if ("scrollRestoration" in window.history) {
-    window.history.scrollRestoration = "manual";
-  }
-
-  window.scrollTo(0, 0);
-}, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -253,19 +235,6 @@ const galleryNext = (e: React.MouseEvent) => {
   const decrement = (id: string) =>
     setQuantities(q => ({ ...q, [id]: Math.max(0, (q[id] ?? 0) - 1) }));
 
-  const handleCategorySelect = (key: string) => {
-    const next = activeCategory === key ? null : key;
-    setActiveCategory(next);
-    if (next) {
-      setTimeout(() => {
-        if (productsGridRef.current) {
-          const top = productsGridRef.current.getBoundingClientRect().top + window.scrollY - 400;
-          window.scrollTo({ top, behavior: "smooth" });
-        }
-      }, 80);
-    }
-  };
-
   const fadeIn = {
     hidden: { opacity: 0, y: 20 },
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
@@ -285,7 +254,7 @@ const galleryNext = (e: React.MouseEvent) => {
     className="font-serif text-4xl font-bold text-[#b68b8b]"
     style={{ fontFamily: "Great Vibes" }}
   >
-    Pasteleria
+    Pastelería
   </span>
 
   <motion.div
@@ -358,24 +327,7 @@ const galleryNext = (e: React.MouseEvent) => {
         </div>
       </header>
       {/* ── Hero ── */}
-      <section
-  id="inicio"
-  className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
-  onClick={nextSlide}
-  onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
-  onTouchEnd={(e) => {
-    const end = e.changedTouches[0].clientX;
-    const diff = touchStart - end;
-
-    if (Math.abs(diff) < 40) return;
-
-    if (diff > 0) {
-      nextSlide();
-    } else {
-      prevSlide();
-    }
-  }}
->
+      <section id="inicio" className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
 
         {/* ── Slider de fondo con Ken Burns ── */}
         <div className="absolute inset-0 z-0">
@@ -399,7 +351,7 @@ const galleryNext = (e: React.MouseEvent) => {
             </motion.div>
           </AnimatePresence>
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/15 to-black/50" />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/60" />
         </div>
 
         {/* ── Contenido central ── */}
@@ -424,7 +376,7 @@ const galleryNext = (e: React.MouseEvent) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="w-[85vw] max-w-[420px] md:max-w-[600px] lg:max-w-[680px] h-auto mb-0 drop-shadow-2xl"
+            className="w-[115vw] max-w-none md:max-w-[600px] lg:max-w-[680px] h-auto mb-0 drop-shadow-2xl"
           />
 
           {/* Tagline */}
@@ -432,40 +384,37 @@ const galleryNext = (e: React.MouseEvent) => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-3xl md:text-5xl text-white mb-10 max-w-2xl font-light -mt-4"
-            style={{
-              fontFamily: "Great Vibes",
-              textShadow: "0 2px 14px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3)",
-            }}
+            className="text-3xl md:text-5xl text-white mb-10 max-w-2xl font-light -mt-4 drop-shadow-lg"
+            style={{ fontFamily: "Great Vibes" }}
           >
             Cada bocado, una obra de arte.
           </motion.p>
 
-          {/* CTA Ver Catálogo — esquina inferior izquierda */}
+          {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, x: -16 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 1.0 }}
-            className="absolute bottom-2 left-6 md:left-10 z-10"
-          >
-            <button
-              onClick={() => {
-                const catalogo = document.getElementById("catalogo");
-                if (catalogo) {
-                  window.scrollTo({ top: catalogo.offsetTop - 60, behavior: "smooth" });
-                }
-              }}
-              className="flex items-center gap-3 text-white/80 hover:text-white transition-all duration-300 group"
-            >
-              <span
-                className="text-sm font-semibold tracking-[0.18em] uppercase"
-                style={{ textShadow: "0 1px 6px rgba(0,0,0,0.5)" }}
-              >
-                Ver Catálogo
-              </span>
-              <span className="w-8 h-[1.5px] bg-white/50 group-hover:w-14 group-hover:bg-white/90 transition-all duration-400 rounded-full" />
-            </button>
-          </motion.div>
+  initial={{ opacity: 0, y: 20 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.8, delay: 0.6 }}
+  className="absolute bottom-2 left-1/2 -translate-x-1/2 md:bottom-12 md:left-16 md:translate-x-0"
+>
+  <Button
+    size="lg"
+    variant="outline"
+    className="rounded-full gap-2.5 h-12 px-8 text-sm font-semibold bg-white/10 backdrop-blur-md border-white/40 text-white hover:bg-white/20 hover:border-white/60 transition-all duration-300 hover:-translate-y-0.5 shadow-lg"
+    onClick={() => {
+  const catalogo = document.getElementById("catalogo");
+
+  if (catalogo) {
+    window.scrollTo({
+      top: catalogo.offsetTop - 150,
+      behavior: "smooth",
+    });
+  }
+}}
+  >
+    Ver Catálogo
+  </Button>
+</motion.div>
           {/* Sobre mí */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -582,38 +531,17 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
 </motion.section>
 
       {/* ── Catálogo ── */}
-      <section
-  id="catalogo"
-  className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white"
->
-  {/* Luces decorativas */}
-  <div className="absolute top-10 left-[-150px] w-[400px] h-[400px] bg-[#ddbabc]/25 rounded-full blur-[140px] pointer-events-none" />
-
-  <div className="absolute bottom-10 right-[-150px] w-[420px] h-[420px] bg-[#a17a7e]/10 rounded-full blur-[140px] pointer-events-none" />
-
-  {/* Textura premium */}
-  <div
-    className="absolute inset-0 opacity-[0.025] pointer-events-none"
-    style={{
-      backgroundImage:
-        "radial-gradient(circle at 1px 1px, #a17a7e 1px, transparent 0)",
-      backgroundSize: "28px 28px",
-    }}
-  />
-
-  <div className="container px-4 mx-auto relative z-10">
+      <section id="catalogo" className="py-20 bg-[#fdfaf]">
+        <div className="container px-4 mx-auto">
 
           {/* Header */}
           <motion.div
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, margin: "-100px" }}
-  variants={fadeIn}
-  className="relative text-center mb-14"
->
-  <div className="absolute left-1/2 -translate-x-1/2 -top-16 text-[90px] md:text-[140px] font-serif font-bold text-[#ddbabc]/10 select-none pointer-events-none">
-    Dulce
-  </div>
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+            variants={fadeIn}
+            className="text-center mb-14"
+          >
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
               Pastelería artesanal
             </p>
@@ -628,7 +556,7 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
             {CATALOG_CATEGORIES.map(cat => (
               <button
                 key={cat.key}
-                onClick={() => handleCategorySelect(cat.key)}
+                onClick={() => setActiveCategory(activeCategory === cat.key ? null : cat.key)}
                 className={cn(
                   "rounded-full px-6 py-2.5 text-sm font-semibold tracking-wide transition-all duration-300",
                   activeCategory === cat.key
@@ -642,104 +570,90 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
           </div>
 
           {/* Product grid */}
-          <div ref={productsGridRef}>
-            <AnimatePresence initial={false}>
-              {activeCategory && (
-                <motion.div
-                  key={activeCategory}
-                  initial={{ opacity: 0, y: 16 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 16 }}
-                  transition={{ duration: 0.3, ease: "easeInOut" }}
-                >
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {(PRODUCTS_BY_CATEGORY[activeCategory] ?? []).map((item, i) => {
-                      const qty = quantities[item.id] ?? 0;
-                      return (
-                        <motion.div
-                          key={item.id}
-                          initial={{ opacity: 0, y: 20 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: i * 0.07 }}
-                        >
-                          <div className="group bg-white rounded-3xl overflow-hidden border border-[#f0e0e0] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_50px_-12px_rgba(161,122,126,0.3)] hover:border-[#ddbabc]">
-                            {/* Imagen — click abre modal */}
-                            <div
-                              className="aspect-[4/3] overflow-hidden relative bg-[#fdf6f6] cursor-pointer"
-                              onClick={() => openGalleryModal({ id: parseInt(item.id) || i, name: item.name, images: [item.img] })}
-                            >
-                              <img
-                                src={item.img}
-                                alt={item.name}
-                                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-[#5f3f43]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                              {/* Lupa de zoom */}
-                              <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <div className="w-10 h-10 rounded-full bg-white/80 backdrop-blur-sm flex items-center justify-center shadow-md">
-                                  <svg className="w-4 h-4 text-[#a17a7e]" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
-                                    <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-                                  </svg>
-                                </div>
-                              </div>
-                              <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#a17a7e] text-[10px] font-bold tracking-[0.15em] uppercase px-3 py-1 rounded-full border border-[#ddbabc]/60">
-                                {item.category}
+          <AnimatePresence initial={false}>
+            {activeCategory && (
+              <motion.div
+                key={activeCategory}
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 16 }}
+                transition={{ duration: 0.3, ease: "easeInOut" }}
+              >
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {(PRODUCTS_BY_CATEGORY[activeCategory] ?? []).map((item, i) => {
+                    const qty = quantities[item.id] ?? 0;
+                    return (
+                      <motion.div
+                        key={item.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: i * 0.07 }}
+                      >
+                        <div className="group bg-white rounded-3xl overflow-hidden border border-[#f0e0e0] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_24px_50px_-12px_rgba(161,122,126,0.3)] hover:border-[#ddbabc]">
+                          <div className="aspect-[4/3] overflow-hidden relative bg-[#fdf6f6]">
+                            <img
+                              src={item.img}
+                              alt={item.name}
+                              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#5f3f43]/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <span className="absolute top-3 left-3 bg-white/90 backdrop-blur-sm text-[#a17a7e] text-[10px] font-bold tracking-[0.15em] uppercase px-3 py-1 rounded-full border border-[#ddbabc]/60">
+                              {item.category}
+                            </span>
+                          </div>
+                          <div className="p-5">
+                            <h3 className="font-serif font-bold text-lg text-[#3d2527] mb-1 leading-snug">
+                              {item.name}
+                            </h3>
+                            <p className="text-sm text-[#9c7679] line-clamp-2 mb-4 leading-relaxed">
+                              {item.desc}
+                            </p>
+                            <div className="flex items-center justify-between pt-3 border-t border-[#f0e0e0]">
+                              <span className="font-bold text-xl text-[#a17a7e]">
+                                ${item.price.toLocaleString("es-AR")}
                               </span>
-                            </div>
-                            <div className="p-5">
-                              <h3 className="font-serif font-bold text-lg text-[#3d2527] mb-1 leading-snug">
-                                {item.name}
-                              </h3>
-                              <p className="text-sm text-[#9c7679] line-clamp-2 mb-4 leading-relaxed">
-                                {item.desc}
-                              </p>
-                              <div className="flex items-center justify-between pt-3 border-t border-[#f0e0e0]">
-                                <span className="font-bold text-xl text-[#a17a7e]">
-                                  ${item.price.toLocaleString("es-AR")}
-                                </span>
-                                <div className="flex items-center gap-2">
-                                  <button
-                                    onClick={() => decrement(item.id)}
-                                    disabled={qty === 0}
-                                    className={cn(
-                                      "w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-200",
-                                      qty > 0
-                                        ? "border-[#c2a1a3] text-[#a17a7e] hover:bg-[#a17a7e] hover:text-white hover:border-[#a17a7e]"
-                                        : "border-[#e8d5d5] text-[#d4b4b4] cursor-not-allowed"
-                                    )}
+                              <div className="flex items-center gap-2">
+                                <button
+                                  onClick={() => decrement(item.id)}
+                                  disabled={qty === 0}
+                                  className={cn(
+                                    "w-8 h-8 rounded-full border flex items-center justify-center transition-all duration-200",
+                                    qty > 0
+                                      ? "border-[#c2a1a3] text-[#a17a7e] hover:bg-[#a17a7e] hover:text-white hover:border-[#a17a7e]"
+                                      : "border-[#e8d5d5] text-[#d4b4b4] cursor-not-allowed"
+                                  )}
+                                >
+                                  <Minus className="w-3.5 h-3.5" />
+                                </button>
+                                <AnimatePresence mode="popLayout" initial={false}>
+                                  <motion.span
+                                    key={qty}
+                                    initial={{ scale: 0.6, opacity: 0 }}
+                                    animate={{ scale: 1, opacity: 1 }}
+                                    exit={{ scale: 0.6, opacity: 0 }}
+                                    transition={{ duration: 0.18 }}
+                                    className="w-6 text-center font-bold text-sm tabular-nums inline-block text-[#3d2527]"
                                   >
-                                    <Minus className="w-3.5 h-3.5" />
-                                  </button>
-                                  <AnimatePresence mode="popLayout" initial={false}>
-                                    <motion.span
-                                      key={qty}
-                                      initial={{ scale: 0.6, opacity: 0 }}
-                                      animate={{ scale: 1, opacity: 1 }}
-                                      exit={{ scale: 0.6, opacity: 0 }}
-                                      transition={{ duration: 0.18 }}
-                                      className="w-6 text-center font-bold text-sm tabular-nums inline-block text-[#3d2527]"
-                                    >
-                                      {qty}
-                                    </motion.span>
-                                  </AnimatePresence>
-                                  <button
-                                    onClick={() => increment(item.id)}
-                                    className="w-8 h-8 rounded-full bg-[#a17a7e] text-white flex items-center justify-center hover:bg-[#8d676b] transition-colors duration-200 shadow-[0_4px_12px_rgba(161,122,126,0.4)]"
-                                  >
-                                    <Plus className="w-3.5 h-3.5" />
-                                  </button>
-                                </div>
+                                    {qty}
+                                  </motion.span>
+                                </AnimatePresence>
+                                <button
+                                  onClick={() => increment(item.id)}
+                                  className="w-8 h-8 rounded-full bg-[#a17a7e] text-white flex items-center justify-center hover:bg-[#8d676b] transition-colors duration-200 shadow-[0_4px_12px_rgba(161,122,126,0.4)]"
+                                >
+                                  <Plus className="w-3.5 h-3.5" />
+                                </button>
                               </div>
                             </div>
                           </div>
-                        </motion.div>
-                      );
-                    })}
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
+                        </div>
+                      </motion.div>
+                    );
+                  })}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
 
           {/* Cart strip */}
           <AnimatePresence>
@@ -786,7 +700,7 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
       </section>
 
       {/* ── Galería ── */}
-      <section id="galeria" className="py-20 bg-gradient-to-b from-white via-[#fdf6f6] to-[#f8f0f0]">
+      <section id="galeria" className="py-20 bg-[#fdfafa]">
         <div className="container px-4 mx-auto">
 
           {/* Header */}
@@ -909,17 +823,12 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
               </div>
 
               {/* Info + miniaturas */}
-              <div className="p-4 sm:p-6 bg-[#1a0f10]">
-                <p className="text-white font-serif font-bold text-xl mb-0.5 leading-tight">
-                  {selectedGalleryItem.name}
-                </p>
-                <p className="text-[#c2a1a3] text-xs tracking-widest uppercase font-medium mb-3">
-                  Dulce Palo · Pastelería artesanal
-                </p>
+              <div className="p-4 sm:p-5">
+                <p className="text-white font-serif font-semibold text-lg mb-1">{selectedGalleryItem.name}</p>
 
                 {/* Miniaturas — solo si hay más de 1 */}
                 {selectedGalleryItem.images.length > 1 && (
-                  <div className="flex gap-2 overflow-x-auto pb-1 pt-1">
+                  <div className="flex gap-2 mt-3 overflow-x-auto pb-1">
                     {selectedGalleryItem.images.map((img, idx) => (
                       <button
                         key={idx}
@@ -928,7 +837,7 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
                           "shrink-0 w-14 h-14 rounded-xl overflow-hidden border-2 transition-all duration-200",
                           idx === galleryImageIndex
                             ? "border-[#c2a1a3] opacity-100 scale-105"
-                            : "border-white/10 opacity-50 hover:opacity-80"
+                            : "border-transparent opacity-50 hover:opacity-80"
                         )}
                       >
                         <img src={img} alt="" className="w-full h-full object-cover" />
@@ -1119,26 +1028,17 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
             </AnimatePresence>
 
             {/* Main circular button */}
-            <div className="relative">
-              {!contactOpen && (
-                <motion.span
-                  className="absolute inset-0 rounded-full bg-[#c2a1a3]"
-                  animate={{ scale: [1, 1.5, 1], opacity: [0.45, 0, 0.45] }}
-                  transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
-                />
-              )}
-              <button
-                onClick={() => setContactOpen(o => !o)}
-                className={cn(
-                  "relative w-14 h-14 rounded-full border-2 border-[#fdf6f6] shadow-[0_8px_30px_rgba(0,0,0,0.20)] flex items-center justify-center transition-all duration-300",
-                  contactOpen
-                    ? "bg-[#a17a7e] text-white rotate-45"
-                    : "bg-[#c2a1a3] text-white hover:bg-[#ddbabc] hover:scale-110"
-                )}
-              >
-                <Phone className="w-6 h-6" />
-              </button>
-            </div>
+            <button
+              onClick={() => setContactOpen(o => !o)}
+              className={cn(
+  "w-14 h-14 rounded-full border-2 border-[#fdf6f6] shadow-[0_8px_30px_rgba(0,0,0,0.20)] flex items-center justify-center transition-all duration-300",
+  contactOpen
+    ? "bg-[#a17a7e] text-white rotate-45"
+    : "bg-[#c2a1a3] text-white hover:bg-[#ddbabc] hover:scale-110"
+)}
+            >
+              <Phone className="w-6 h-6" />
+            </button>
           </motion.div>
         )}
       </AnimatePresence>
