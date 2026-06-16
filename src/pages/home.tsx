@@ -506,7 +506,11 @@ const galleryNext = (e: React.MouseEvent) => {
             initial={{ opacity: 0, x: -16 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 1.0 }}
-            className="absolute bottom-2 left-6 md:left-10 z-10"
+            className="
+  absolute z-10
+  left-6 md:left-10
+  bottom-6 md:bottom-16 lg:bottom-24
+"
           >
             <button
               onClick={() => {
@@ -621,10 +625,10 @@ const galleryNext = (e: React.MouseEvent) => {
 
     <div className="text-center mb-14">
       <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-        Creaciones de la casa
+        ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
       </p>
       <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
-        Productos Destacados
+        Tortas Personalizadas
       </h2>
       <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto" />
     </div>
