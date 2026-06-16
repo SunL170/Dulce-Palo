@@ -655,26 +655,27 @@ const galleryNext = (e: React.MouseEvent) => {
       modules={[EffectCoverflow, Autoplay]}
     >
       {FEATURED_PRODUCTS.map((item, index) => (
-        <SwiperSlide
-          key={index}
-          className="!w-[240px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px]"
-        >
-          <div className="overflow-hidden rounded-xl border border-[#f0e0e0] bg-white">
-            <div className="aspect-[3/4] overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.title}
-                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-              />
-            </div>
-            <div className="py-3 px-4 text-center">
-              <p className="text-sm font-semibold text-[#5f3f43] tracking-wide truncate">
-                {item.title}
-              </p>
-            </div>
-          </div>
-        </SwiperSlide>
-      ))}
+  <SwiperSlide
+    key={index}
+    className="!w-[240px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px]"
+  >
+    <div className="overflow-hidden rounded-xl border border-[#f0e0e0] bg-white">
+      <div className="relative aspect-[3/4] overflow-hidden">
+  <img
+    src={item.image}
+    alt={item.title}
+    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+  />
+
+  <div className="absolute bottom-4 left-4">
+    <p className="text-white font-semibold text-lg drop-shadow-lg">
+      {item.title}
+    </p>
+  </div>
+</div>
+    </div>
+  </SwiperSlide>
+))}
     </Swiper>
 
   </div>
@@ -914,10 +915,10 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
           {/* Header */}
           <div className="text-center mb-14">
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-              Nuestras creaciones
+               ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
             </p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
-              Nuestra Galería
+            Galería
             </h2>
             <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto mb-5" />
             <p className="text-muted-foreground flex items-center justify-center gap-2 text-sm">
