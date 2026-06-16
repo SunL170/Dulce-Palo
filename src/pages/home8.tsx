@@ -543,10 +543,10 @@ const galleryNext = (e: React.MouseEvent) => {
               {showAbout && (
                 <motion.div
                   id="about-content"
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.6 }}
+                  initial={{ opacity: 0, maxHeight: 0 }}
+                  animate={{ opacity: 1, maxHeight: 800 }}
+                  exit={{ opacity: 0, maxHeight: 0 }}
+                  transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="overflow-hidden mt-8 w-full"
                 >
                   <div className="max-w-5xl mx-auto bg-[#fdf6f6] rounded-[32px] shadow-lg p-8 md:p-10">
@@ -571,15 +571,11 @@ const galleryNext = (e: React.MouseEvent) => {
                           <button
                             style={{ fontFamily: "Great Vibes" }}
                             onClick={() => {
-  setShowAbout(false);
-
-  setTimeout(() => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  }, 300);
-}}
+                              setShowAbout(false);
+                              setTimeout(() => {
+                                window.scrollTo({ top: 0, behavior: "smooth" });
+                              }, 300);
+                            }}
                             className="px-6 py-2 rounded-full bg-[#a17a7e] text-2xl text-white hover:bg-[#8c686c] transition-all duration-300 shadow-md"
                           >
                             Cerrar
@@ -607,69 +603,62 @@ const galleryNext = (e: React.MouseEvent) => {
       </section>
 
 
-<section className="py-20 bg-white">
+<section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
   <div className="container mx-auto px-4">
 
-    <h2 className="text-center text-4xl font-bold mb-12 text-[#a17a7e]">
-      Productos Destacados
-    </h2>
+    <div className="text-center mb-14">
+      <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
+        Creaciones de la casa
+      </p>
+      <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
+        Productos Destacados
+      </h2>
+      <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto" />
+    </div>
 
     <Swiper
-  effect="coverflow"
-  grabCursor={true}
-  centeredSlides={true}
-  slidesPerView={"auto"}
-  loop={true}
-  rewind={false}
-  speed={800}
-  autoplay={{
-    delay: 3000,
-    disableOnInteraction: false,
-  }}
-  coverflowEffect={{
-    rotate: 0,
-    stretch: -20,
-    depth: 200,
-    modifier: 1.5,
-    scale: 0.9,
-    slideShadows: false,
-  }}
-  pagination={{
-    clickable: true,
-  }}
-  modules={[EffectCoverflow, Pagination, Autoplay]}
->
-  {FEATURED_PRODUCTS.map((item, index) => (
-    <SwiperSlide
-      key={index}
-      className="!w-[260px] md:!w-[320px] lg:!w-[360px]"
+      effect="coverflow"
+      grabCursor={true}
+      centeredSlides={true}
+      slidesPerView={"auto"}
+      loop={true}
+      speed={700}
+      autoplay={{
+        delay: 3500,
+        disableOnInteraction: false,
+      }}
+      coverflowEffect={{
+        rotate: 0,
+        stretch: -10,
+        depth: 120,
+        modifier: 1.2,
+        scale: 0.92,
+        slideShadows: false,
+      }}
+      modules={[EffectCoverflow, Autoplay]}
     >
-      <div className="bg-white rounded-[30px] overflow-hidden shadow-2xl">
-        <img
-          src={item.image}
-          alt={item.title}
-          className="w-full h-[320px] md:h-[420px] object-cover"
-        />
-
-        <div className="p-6">
-          <h3 className="text-2xl font-bold text-[#5f3f43]">
-            {item.title}
-          </h3>
-
-          <div className="flex items-center justify-between mt-4">
-            <span className="font-bold text-[#a17a7e] text-xl">
-              {item.price}
-            </span>
-
-            <div className="text-yellow-500">
-              ⭐⭐⭐⭐⭐
+      {FEATURED_PRODUCTS.map((item, index) => (
+        <SwiperSlide
+          key={index}
+          className="!w-[240px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px]"
+        >
+          <div className="overflow-hidden rounded-xl border border-[#f0e0e0] bg-white">
+            <div className="aspect-[3/4] overflow-hidden">
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
+              />
+            </div>
+            <div className="py-3 px-4 text-center">
+              <p className="text-sm font-semibold text-[#5f3f43] tracking-wide truncate">
+                {item.title}
+              </p>
             </div>
           </div>
-        </div>
-      </div>
-    </SwiperSlide>
-  ))}
-</Swiper>
+        </SwiperSlide>
+      ))}
+    </Swiper>
 
   </div>
 </section>
@@ -902,7 +891,7 @@ className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-
       </section>
 
       {/* ── Galería ── */}
-      <section id="galeria" className="py-20 bg-gradient-to-b from-white via-[#fdf6f6] to-[#f8f0f0]">
+      <section id="galeria" className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
         <div className="container px-4 mx-auto">
 
           {/* Header */}
