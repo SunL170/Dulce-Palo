@@ -488,7 +488,7 @@ const galleryNext = (e: React.MouseEvent) => {
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8, delay: 0.2 }}
-  className="w-[110vw] md:w-[min(56vw,620px)] h-auto drop-shadow-[0_4px_32px_rgba(0,0,0,.55)]
+  className="w-[min(78vw,480px)] md:w-[min(56vw,620px)] h-auto drop-shadow-[0_4px_32px_rgba(0,0,0,.55)]
               brightness-110 contrast-150 saturate-90"
 />
 
@@ -623,25 +623,6 @@ const galleryNext = (e: React.MouseEvent) => {
         </motion.div>
 
       </section>
-      {/* ═══════════════════════════ MARQUEE ═════════════════════════ */}
-      <div
-        className="overflow-hidden py-3.5 cursor-pointer select-none"
-        style={{ background: "#A07878" }}
-        onClick={() => setDirection(d => d * -1)}
-      >
-        <motion.div
-          animate={{ x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-          transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
-          className="flex gap-8 whitespace-nowrap w-max"
-        >
-          {[...marqueeItems, ...marqueeItems].map((t, i) => (
-            <span key={i} className="flex items-center gap-8 text-white/85 text-xs tracking-[.18em] uppercase font-medium" style={{ fontFamily: "system-ui, sans-serif" }}>
-              {t}
-              <span className="text-white/30 text-[8px]">◆</span>
-            </span>
-          ))}
-        </motion.div>
-      </div>
 
 
 <section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
@@ -704,7 +685,29 @@ const galleryNext = (e: React.MouseEvent) => {
 
   </div>
 </section>
-
+<motion.section
+      
+  className="py-8 overflow-hidden border-y border-[#ddbabc]/50"
+  onClick={() => setDirection(direction * -1)}
+>
+  <motion.div
+  animate={{
+    x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"],
+  }}
+  transition={{
+    duration: 40,
+    repeat: Infinity,
+    ease: "linear",
+  }}
+className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-serif font-medium w-max cursor-pointer">
+  {[...marqueeItems, ...marqueeItems].map((item, i) => (
+    <span key={i} className="flex items-center gap-7">
+      {item}
+      <span className="text-[#ddbabc]">✦</span>
+    </span>
+  ))}
+</motion.div>
+</motion.section>
 
       {/* ── Catálogo ── */}
       <section
@@ -909,28 +912,6 @@ const galleryNext = (e: React.MouseEvent) => {
 
         </div>
       </section>
-      <div
-  className="overflow-hidden py-3.5 cursor-pointer select-none"
-  style={{ background: "#A07878" }}
-  onClick={() => setDirection(d => d * -1)}
->
-  <motion.div
-    animate={{ x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-    transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
-    className="flex gap-8 whitespace-nowrap w-max"
-  >
-    {[...marqueeItems, ...marqueeItems].map((t, i) => (
-      <span
-        key={i}
-        className="flex items-center gap-8 text-white/85 text-xs tracking-[.18em] uppercase font-medium"
-        style={{ fontFamily: "system-ui, sans-serif" }}
-      >
-        {t}
-        <span className="text-white/30 text-[8px]">◆</span>
-      </span>
-    ))}
-  </motion.div>
-</div>
 
       {/* ── Galería ── */}
       <section id="galeria" className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
@@ -939,7 +920,7 @@ const galleryNext = (e: React.MouseEvent) => {
           {/* Header */}
           <div className="text-center mb-14">
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-                ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
+               ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
             </p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
             Galería

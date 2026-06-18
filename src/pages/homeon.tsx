@@ -453,33 +453,25 @@ const galleryNext = (e: React.MouseEvent) => {
                 initial={{ scale: 1.08 }}
                 animate={{ scale: 1 }}
                 transition={{ duration: SLIDE_DURATION / 1000 + 1.2, ease: "linear" }}
-                className="w-full h-full object-cover object-center opacity-80"
+                className="w-full h-full object-cover object-center opacity-75"
               />
             </motion.div>
           </AnimatePresence>
           {/* Overlay */}
-          <>
-  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-black/65" />
-  <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
-</>
+          <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/15 to-black/50" />
         </div>
 
         {/* ── Contenido central ── */}
         <div className="container relative z-10 px-4 py-20 md:py-32 flex flex-col items-center text-center max-w-4xl mx-auto">
 
           {/* Badge de ubicación */}
-          <motion.div
-  initial={{ opacity: 0, y: 8 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: .7 }}
-  onClick={openMaps}
-  className="flex items-center gap-3 mb-8 cursor-pointer group"
->
-  <MapPin className="w-3 h-3 text-[#D4B5AD] group-hover:text-white transition-colors" />
-  <span className="text-[#D4B5AD] group-hover:text-white transition-colors text-xs tracking-[.22em] uppercase font-medium">
-    Monteros, Tucumán
-  </span>
-</motion.div>
+          <button
+                          onClick={openMaps}
+                          className="text-[#C9A89A] text-xs tracking-[0.25em] uppercase font-medium hover:text-white transition-colors"
+                        >
+                          Monteros, Tucumán
+                        </button>
+                      </motion.div>
 
           {/* Logo */}
           <motion.img
@@ -488,8 +480,8 @@ const galleryNext = (e: React.MouseEvent) => {
   initial={{ opacity: 0, y: 20 }}
   animate={{ opacity: 1, y: 0 }}
   transition={{ duration: 0.8, delay: 0.2 }}
-  className="w-[110vw] md:w-[min(56vw,620px)] h-auto drop-shadow-[0_4px_32px_rgba(0,0,0,.55)]
-              brightness-110 contrast-150 saturate-90"
+  className="w-[85vw] max-w-[420px] md:max-w-[600px] lg:max-w-[680px] h-auto mb-0 drop-shadow-2xl
+             brightness-110 contrast-150 saturate-90"
 />
 
           {/* Tagline */}
@@ -565,9 +557,9 @@ const galleryNext = (e: React.MouseEvent) => {
               {showAbout && (
                 <motion.div
                   id="about-content"
-                  initial={{ opacity: 0, maxHeight: 0 }}
-                  animate={{ opacity: 1, maxHeight: 800 }}
-                  exit={{ opacity: 0, maxHeight: 0 }}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
                   transition={{ duration: 0.4, ease: "easeInOut" }}
                   className="overflow-hidden mt-8 w-full"
                 >
@@ -623,25 +615,6 @@ const galleryNext = (e: React.MouseEvent) => {
         </motion.div>
 
       </section>
-      {/* ═══════════════════════════ MARQUEE ═════════════════════════ */}
-      <div
-        className="overflow-hidden py-3.5 cursor-pointer select-none"
-        style={{ background: "#A07878" }}
-        onClick={() => setDirection(d => d * -1)}
-      >
-        <motion.div
-          animate={{ x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-          transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
-          className="flex gap-8 whitespace-nowrap w-max"
-        >
-          {[...marqueeItems, ...marqueeItems].map((t, i) => (
-            <span key={i} className="flex items-center gap-8 text-white/85 text-xs tracking-[.18em] uppercase font-medium" style={{ fontFamily: "system-ui, sans-serif" }}>
-              {t}
-              <span className="text-white/30 text-[8px]">◆</span>
-            </span>
-          ))}
-        </motion.div>
-      </div>
 
 
 <section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
@@ -704,7 +677,29 @@ const galleryNext = (e: React.MouseEvent) => {
 
   </div>
 </section>
-
+<motion.section
+      
+  className="py-8 overflow-hidden border-y border-[#ddbabc]/50"
+  onClick={() => setDirection(direction * -1)}
+>
+  <motion.div
+  animate={{
+    x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"],
+  }}
+  transition={{
+    duration: 40,
+    repeat: Infinity,
+    ease: "linear",
+  }}
+className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-serif font-medium w-max cursor-pointer">
+  {[...marqueeItems, ...marqueeItems].map((item, i) => (
+    <span key={i} className="flex items-center gap-7">
+      {item}
+      <span className="text-[#ddbabc]">✦</span>
+    </span>
+  ))}
+</motion.div>
+</motion.section>
 
       {/* ── Catálogo ── */}
       <section
@@ -909,28 +904,6 @@ const galleryNext = (e: React.MouseEvent) => {
 
         </div>
       </section>
-      <div
-  className="overflow-hidden py-3.5 cursor-pointer select-none"
-  style={{ background: "#A07878" }}
-  onClick={() => setDirection(d => d * -1)}
->
-  <motion.div
-    animate={{ x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-    transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
-    className="flex gap-8 whitespace-nowrap w-max"
-  >
-    {[...marqueeItems, ...marqueeItems].map((t, i) => (
-      <span
-        key={i}
-        className="flex items-center gap-8 text-white/85 text-xs tracking-[.18em] uppercase font-medium"
-        style={{ fontFamily: "system-ui, sans-serif" }}
-      >
-        {t}
-        <span className="text-white/30 text-[8px]">◆</span>
-      </span>
-    ))}
-  </motion.div>
-</div>
 
       {/* ── Galería ── */}
       <section id="galeria" className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
@@ -939,7 +912,7 @@ const galleryNext = (e: React.MouseEvent) => {
           {/* Header */}
           <div className="text-center mb-14">
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-                ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
+               ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
             </p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
             Galería

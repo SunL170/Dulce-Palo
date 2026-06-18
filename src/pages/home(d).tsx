@@ -416,92 +416,68 @@ const galleryNext = (e: React.MouseEvent) => {
           </div>
         </div>
       </header>
-      {/* ── Hero ── */}
+      {/* ═══════════════════════════ HERO ════════════════════════════ */}
       <section
-  id="inicio"
-  className="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden"
-  onClick={nextSlide}
-  onTouchStart={(e) => setTouchStart(e.touches[0].clientX)}
-  onTouchEnd={(e) => {
-    const end = e.changedTouches[0].clientX;
-    const diff = touchStart - end;
-
-    if (Math.abs(diff) < 40) return;
-
-    if (diff > 0) {
-      nextSlide();
-    } else {
-      prevSlide();
-    }
-  }}
->
-
-        {/* ── Slider de fondo con Ken Burns ── */}
+        id="inicio"
+        className="relative min-h-screen overflow-hidden"
+        onTouchStart={e => setTouchStart(e.touches[0].clientX)}
+        onTouchEnd={e => {
+          const d = touchStart - e.changedTouches[0].clientX;
+          if (Math.abs(d) < 50) return;
+          setHeroIndex(i => d > 0 ? (i + 1) % HERO_SLIDES.length : (i - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+          startTimer();
+        }}
+      >
+        {/* image slides */}
         <div className="absolute inset-0 z-0">
           <AnimatePresence initial={false}>
-            <motion.div
-              key={heroIndex}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1.2, ease: "easeInOut" }}
-              className="absolute inset-0"
-            >
+            <motion.div key={heroIndex} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 1.6, ease: "easeInOut" }} className="absolute inset-0">
               <motion.img
                 src={HERO_SLIDES[heroIndex].img}
-                alt={HERO_SLIDES[heroIndex].label}
-                initial={{ scale: 1.08 }}
+                alt=""
+                initial={{ scale: 1.07 }}
                 animate={{ scale: 1 }}
-                transition={{ duration: SLIDE_DURATION / 1000 + 1.2, ease: "linear" }}
-                className="w-full h-full object-cover object-center opacity-80"
+                transition={{ duration: 7.5, ease: "linear" }}
+                className="w-full h-full object-cover"
               />
             </motion.div>
           </AnimatePresence>
-          {/* Overlay */}
-          <>
-  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-black/65" />
-  <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
-</>
+          {/* layered overlays for depth */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-black/65" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
         </div>
 
-        {/* ── Contenido central ── */}
-        <div className="container relative z-10 px-4 py-20 md:py-32 flex flex-col items-center text-center max-w-4xl mx-auto">
+        {/* content */}
+        <div className="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center pt-24 pb-20">
 
-          {/* Badge de ubicación */}
           <motion.div
-  initial={{ opacity: 0, y: 8 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: .7 }}
-  onClick={openMaps}
-  className="flex items-center gap-3 mb-8 cursor-pointer group"
->
-  <MapPin className="w-3 h-3 text-[#D4B5AD] group-hover:text-white transition-colors" />
-  <span className="text-[#D4B5AD] group-hover:text-white transition-colors text-xs tracking-[.22em] uppercase font-medium">
-    Monteros, Tucumán
-  </span>
-</motion.div>
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .7 }}
+            className="flex items-center gap-3 mb-8 cursor-pointer group"
+            onClick={openMaps}
+          >
+            <MapPin className="w-3 h-3 text-[#D4B5AD] group-hover:text-white transition-colors" />
+            <span className="text-[#D4B5AD] group-hover:text-white transition-colors text-xs tracking-[.22em] uppercase font-medium">
+              Monteros, Tucumán
+            </span>
+          </motion.div>
 
-          {/* Logo */}
           <motion.img
-  src={logoImg}
-  alt="Dulce Palo"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8, delay: 0.2 }}
-  className="w-[110vw] md:w-[min(56vw,620px)] h-auto drop-shadow-[0_4px_32px_rgba(0,0,0,.55)]
-              brightness-110 contrast-150 saturate-90"
-/>
-
-          {/* Tagline */}
-          <motion.p
+            src={logoImg}
+            alt="Dulce Palo"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-3xl md:text-5xl text-white mb-10 max-w-2xl font-light -mt-4"
-            style={{
-              fontFamily: "Great Vibes",
-              textShadow: "0 2px 14px rgba(0,0,0,0.5), 0 1px 4px rgba(0,0,0,0.3)",
-            }}
+            transition={{ duration: 1, delay: .12 }}
+            className="w-[min(78vw,480px)] md:w-[min(56vw,620px)] h-auto drop-shadow-[0_4px_32px_rgba(0,0,0,.55)]"
+          />
+
+          <motion.p
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: .9, delay: .3 }}
+            className="text-white/90 mt-2 -mb-2 text-2xl md:text-3xl font-light leading-snug"
+            style={{ fontFamily: "Great Vibes, cursive", textShadow: "0 2px 16px rgba(0,0,0,.45)" }}
           >
             Cada bocado, una obra de arte.
           </motion.p>
@@ -612,36 +588,33 @@ const galleryNext = (e: React.MouseEvent) => {
           </motion.div>
         </div>
 
-        {/* ── Indicador de scroll ── */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1, y: [0, 8, 0] }}
-          transition={{ opacity: { delay: 1.2, duration: 0.6 }, y: { delay: 1.2, duration: 2, repeat: Infinity, ease: "easeInOut" } }}
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 z-10 text-white/40"
-        >
-          <ChevronDown className="w-5 h-5" />
-        </motion.div>
 
+        {/* slide label + progress dots */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-3">
+          <AnimatePresence mode="wait">
+            <motion.p
+              key={heroIndex}
+              initial={{ opacity: 0, y: 4 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: .4 }}
+              className="text-white/45 text-[10px] tracking-[.22em] uppercase"
+              style={{ fontFamily: "system-ui, sans-serif" }}
+            >
+              {HERO_SLIDES[heroIndex].label}
+            </motion.p>
+          </AnimatePresence>
+          <div className="flex gap-1.5">
+            {HERO_SLIDES.map((_, i) => (
+              <div
+                key={i}
+                className={cn("h-px transition-all duration-500", i === heroIndex ? "w-6 bg-white" : "w-2.5 bg-white/30")}
+              />
+            ))}
+          </div>
+        </div>
       </section>
-      {/* ═══════════════════════════ MARQUEE ═════════════════════════ */}
-      <div
-        className="overflow-hidden py-3.5 cursor-pointer select-none"
-        style={{ background: "#A07878" }}
-        onClick={() => setDirection(d => d * -1)}
-      >
-        <motion.div
-          animate={{ x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-          transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
-          className="flex gap-8 whitespace-nowrap w-max"
-        >
-          {[...marqueeItems, ...marqueeItems].map((t, i) => (
-            <span key={i} className="flex items-center gap-8 text-white/85 text-xs tracking-[.18em] uppercase font-medium" style={{ fontFamily: "system-ui, sans-serif" }}>
-              {t}
-              <span className="text-white/30 text-[8px]">◆</span>
-            </span>
-          ))}
-        </motion.div>
-      </div>
+
 
 
 <section className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
@@ -657,54 +630,57 @@ const galleryNext = (e: React.MouseEvent) => {
       <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto" />
     </div>
 
-    <Swiper
-      effect="coverflow"
-      grabCursor={true}
-      centeredSlides={true}
-      slidesPerView={"auto"}
-      loop={true}
-      speed={700}
-      autoplay={{
-        delay: 3500,
-        disableOnInteraction: false,
-      }}
-      coverflowEffect={{
-        rotate: 0,
-        stretch: -10,
-        depth: 120,
-        modifier: 1.2,
-        scale: 0.92,
-        slideShadows: false,
-      }}
-      modules={[EffectCoverflow, Autoplay]}
-    >
-      {FEATURED_PRODUCTS.map((item, index) => (
-  <SwiperSlide
-    key={index}
-    className="!w-[240px] sm:!w-[300px] md:!w-[340px] lg:!w-[380px]"
-  >
-    <div className="overflow-hidden rounded-xl border border-[#f0e0e0] bg-white">
-      <div className="relative aspect-[3/4] overflow-hidden">
-  <img
-    src={item.image}
-    alt={item.title}
-    className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-  />
-
-  <div className="absolute bottom-4 left-4">
-    <p className="text-white font-semibold text-lg drop-shadow-lg">
-      {item.title}
-    </p>
-  </div>
-</div>
+    <div className="overflow-x-auto scrollbar-hide">
+      <div className="flex gap-4 pb-4 px-1" style={{ width: "max-content" }}>
+        {FEATURED_PRODUCTS.map((item, index) => (
+          <div
+            key={index}
+            className="shrink-0 w-[240px] sm:w-[280px] md:w-[300px] overflow-hidden group"
+            style={{ background: "#F9F5F0" }}
+          >
+            <div className="relative aspect-[3/4] overflow-hidden" style={{ background: "#EFE7DC" }}>
+              <img
+                src={item.image}
+                alt={item.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
+              />
+              <div className="absolute inset-0 bg-[#241510]/0 group-hover:bg-[#241510]/25 transition-colors duration-500" />
+            </div>
+            <div className="py-3 px-1">
+              <p className="text-sm font-semibold text-[#241510] tracking-wide truncate" style={{ fontFamily: "system-ui, sans-serif" }}>
+                {item.title}
+              </p>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
-  </SwiperSlide>
-))}
-    </Swiper>
 
   </div>
 </section>
-
+<motion.section
+      
+  className="py-8 overflow-hidden border-y border-[#ddbabc]/50"
+  onClick={() => setDirection(direction * -1)}
+>
+  <motion.div
+  animate={{
+    x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"],
+  }}
+  transition={{
+    duration: 40,
+    repeat: Infinity,
+    ease: "linear",
+  }}
+className="flex gap-7 whitespace-nowrap text-[#a17a7e] text-xl md:text-2xl font-serif font-medium w-max cursor-pointer">
+  {[...marqueeItems, ...marqueeItems].map((item, i) => (
+    <span key={i} className="flex items-center gap-7">
+      {item}
+      <span className="text-[#ddbabc]">✦</span>
+    </span>
+  ))}
+</motion.div>
+</motion.section>
 
       {/* ── Catálogo ── */}
       <section
@@ -728,26 +704,19 @@ const galleryNext = (e: React.MouseEvent) => {
 
   <div className="container px-4 mx-auto relative z-10">
 
-          {/* Header */}
           <motion.div
-  initial="hidden"
-  whileInView="visible"
-  viewport={{ once: true, margin: "-100px" }}
-  variants={fadeIn}
-  className="relative text-center mb-14"
->
-  <div className="absolute left-1/2 -translate-x-1/2 -top-16 text-[90px] md:text-[140px] font-serif font-bold text-[#ddbabc]/10 select-none pointer-events-none">
-    Dulce
-  </div>
-            <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-              Pastelería artesanal
-            </p>
-            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
-              Nuestro Catálogo
-            </h2>
-            <div className="w-16 h-[2px] bg-[#ddbabc] mx-auto" />
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: .6 }}
+            className="mb-14"
+          >
+            <div className="flex items-center gap-4 mb-5">
+              <div className="h-px w-7 bg-[#a17a7e]" />
+              <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#a17a7e]" style={{ fontFamily: "system-ui, sans-serif" }}>Pastelería artesanal</p>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43]">Nuestro Catálogo</h2>
           </motion.div>
-
           {/* Category pills */}
           <div className="w-full max-w-3xl mx-auto flex flex-wrap justify-center gap-2 mb-12">
             {CATALOG_CATEGORIES.map(cat => (
@@ -909,28 +878,6 @@ const galleryNext = (e: React.MouseEvent) => {
 
         </div>
       </section>
-      <div
-  className="overflow-hidden py-3.5 cursor-pointer select-none"
-  style={{ background: "#A07878" }}
-  onClick={() => setDirection(d => d * -1)}
->
-  <motion.div
-    animate={{ x: direction === 1 ? ["0%", "-50%"] : ["-50%", "0%"] }}
-    transition={{ duration: 38, repeat: Infinity, ease: "linear" }}
-    className="flex gap-8 whitespace-nowrap w-max"
-  >
-    {[...marqueeItems, ...marqueeItems].map((t, i) => (
-      <span
-        key={i}
-        className="flex items-center gap-8 text-white/85 text-xs tracking-[.18em] uppercase font-medium"
-        style={{ fontFamily: "system-ui, sans-serif" }}
-      >
-        {t}
-        <span className="text-white/30 text-[8px]">◆</span>
-      </span>
-    ))}
-  </motion.div>
-</div>
 
       {/* ── Galería ── */}
       <section id="galeria" className="relative py-20 overflow-hidden bg-gradient-to-b from-[#fdf6f6] via-[#fdfafa] to-white">
@@ -939,7 +886,7 @@ const galleryNext = (e: React.MouseEvent) => {
           {/* Header */}
           <div className="text-center mb-14">
             <p className="text-xs font-semibold tracking-[0.3em] uppercase text-[#c2a1a3] mb-3">
-                ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
+               ࣪🦋་༘࿐Dulce Palo་༘࿐࣪🦋
             </p>
             <h2 className="text-4xl md:text-5xl font-serif font-bold text-[#5f3f43] mb-4">
             Galería
