@@ -459,7 +459,7 @@ const galleryNext = (e: React.MouseEvent) => {
           </AnimatePresence>
           {/* Overlay */}
           <>
-  <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/15 to-black/65" />
+  <div className="absolute inset-0 bg-gradient-to-b from-black/15 via-black/30 to-black/65" />
   <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-transparent" />
 </>
         </div>
